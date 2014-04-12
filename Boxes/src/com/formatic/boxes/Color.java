@@ -1,6 +1,6 @@
 package com.formatic.boxes;
 
-class Color extends com.badlogic.gdx.graphics.Color{
+public class Color extends com.badlogic.gdx.graphics.Color{
 	public static void main(String[] args) {
 		Color c= new Color(Mode.HSB);
 		c.setSaturation(0.5f);
@@ -27,6 +27,10 @@ class Color extends com.badlogic.gdx.graphics.Color{
 		setRGB(c.r, c.g, c.b, c.a);
 		updateFromRGBToHSB();
 	}
+	public Color(float r, float g, float b, float a) {
+		setRGB(r, g, b, a);
+		updateFromRGBToHSB();
+	}
 	
 	public Color(float d1, float d2, float d3){
 		this(d1,d2,d3,Mode.RGB);
@@ -42,6 +46,7 @@ class Color extends com.badlogic.gdx.graphics.Color{
 		r=g=b=0.0f;
 		a=1.0f;
 	}
+
 	public void setHue(float hue){
 		this.hue=hue;
 		this.mode=Mode.HSB;

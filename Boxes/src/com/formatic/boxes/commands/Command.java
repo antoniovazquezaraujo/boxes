@@ -19,7 +19,7 @@
     You should have received a copy of the GNU General Public License
     along with Boxes.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.formatic.boxes;
+package com.formatic.boxes.commands;
 import com.formatic.boxes.widgets.Box;
 
 //Command, comando que puede repetirse un número de veces

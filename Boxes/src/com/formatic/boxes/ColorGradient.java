@@ -21,7 +21,7 @@
 */
 package com.formatic.boxes;
 
-import com.badlogic.gdx.graphics.Color;
+
 
 abstract public class ColorGradient {
   public Point from;
@@ -39,22 +39,41 @@ abstract public class ColorGradient {
   }
 
   public void setFromRed(float r){
-	  fromColor.r = r;
+	  fromColor.setR(r);;
   }
   public void setFromGreen(float g){
-	  fromColor.g=g;
+	  fromColor.setG(g);
   }
   public void setFromBlue(float b){
-	  fromColor.b=b;
+	  fromColor.setB(b);
   }
   public void setToRed(float r){
-	  toColor.r=r;
+	  toColor.setR(r);
   }
   public void setToGreen(float g){
-	  toColor.g=g;
+	  toColor.setG(g);
   }
   public void setToBlue(float b){
-	  toColor.b=b;
+	  toColor.setB(b);
+  }
+
+  public void setFromHue(float hue){
+	  fromColor.setHue(hue);
+  }
+  public void setFromSaturation(float saturation){
+	  fromColor.setSaturation(saturation);
+  }
+  public void setFromBrightness(float brightness){
+	  fromColor.setBrightness(brightness);
+  }
+  public void setToHue(float hue){
+	  toColor.setHue(hue);
+  }
+  public void setToSaturation(float saturation){
+	  toColor.setSaturation(saturation);
+  }
+  public void setToBrightness(float brightness){
+	  toColor.setBrightness(brightness);
   }
   
 }

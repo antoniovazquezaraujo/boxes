@@ -23,7 +23,6 @@
 
 import java.util.Vector;
 
-import com.formatic.boxes.Command;
 import com.formatic.boxes.widgets.Box;
 
 // Batch, actualiza sus comandos uno tras otro
@@ -36,7 +35,7 @@ public class BatchCommand extends Command {
 		this(1);
 	}
 
-	BatchCommand(int times) {
+	public BatchCommand(int times) {
 		super(times);
 		this.commands = new Vector<Command>();
 		actualCommand = 0;

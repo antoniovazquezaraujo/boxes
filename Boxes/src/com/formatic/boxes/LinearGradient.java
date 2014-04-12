@@ -22,7 +22,7 @@
 package com.formatic.boxes;
 
 
-import com.badlogic.gdx.graphics.Color;
+
 
 public class LinearGradient extends ColorGradient {
 	LinearGradient(Point from, Point to, Color fromColor, Color toColor,

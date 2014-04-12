@@ -21,7 +21,9 @@
 */
 package com.formatic.boxes.widgets.events;
 
-import com.badlogic.gdx.graphics.Color;
+import com.formatic.boxes.Color;
+
+
 
 public interface TextKeyboardListener {
 	void charSelected(char c);

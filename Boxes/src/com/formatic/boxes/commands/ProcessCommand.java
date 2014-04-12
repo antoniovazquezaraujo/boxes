@@ -23,7 +23,6 @@ package com.formatic.boxes.commands;
 
 import java.util.Vector;
 
-import com.formatic.boxes.Command;
 import com.formatic.boxes.widgets.Box;
 
 // Process, actualiza sus comandos simultáneamente.
@@ -32,17 +31,17 @@ public class ProcessCommand extends Command {
 	Vector<Command> commands;
 	boolean allCommandsCompleted;
 
-	ProcessCommand() {
+	public ProcessCommand() {
 		this(1);
 	}
 
-	ProcessCommand(int times) {
+	public ProcessCommand(int times) {
 		super(times);
 		this.commands = new Vector<Command>();
 		allCommandsCompleted = false;
 	}
 
-	void addCommand(Command command) {
+	public void addCommand(Command command) {
 		command.setBox(box);
 		commands.add(command);
 	}

@@ -22,7 +22,7 @@
 package com.formatic.boxes;
 
 
-import com.badlogic.gdx.graphics.Color;
+
 import com.badlogic.gdx.math.Rectangle;
 
 public class ScreenModel {

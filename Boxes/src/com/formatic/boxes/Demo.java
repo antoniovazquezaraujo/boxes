@@ -21,8 +21,10 @@
 */
 package com.formatic.boxes;
 
-import com.badlogic.gdx.graphics.Color;
+
+import com.formatic.boxes.commands.BatchCommand;
 import com.formatic.boxes.commands.ChangeCommand;
+import com.formatic.boxes.commands.Command;
 import com.formatic.boxes.games.Cheso;
 import com.formatic.boxes.widgets.Box;
 import com.formatic.boxes.widgets.BoxContainer;
@@ -53,6 +55,7 @@ public class Demo {
 	}
 
 	void populate(Selector topBox) {
+
 		topBox.add(demo1());
 		topBox.add(demo2());
 		topBox.add(demo3());
@@ -73,6 +76,7 @@ public class Demo {
 		topBox.add(demoNumberKeyboard1());
 		topBox.add(demoNumberKeyboard2());
 		topBox.add(demoTextKeyboard());
+		topBox.add(manyGradientBoxes());
 	}
 
 	BoxList demo1() {
@@ -144,7 +148,7 @@ public class Demo {
 	BoxContainer testRadialGradient() {
 		BoxContainer p = new BoxContainer();
 		radialGradient = new RadialGradient(new Point(3, 3), new Point(7, 7),
-											new Color(1.0f, 1.0f, 1.0f, 1.0f),
+											new Color(0.4f, 0.1f, 0.8f, 1.0f),
 											new Color(0.0f, 0.0f, 0.0f, 1.0f),
 											false);
 		p.setColorGradient(radialGradient);
@@ -487,5 +491,17 @@ public class Demo {
 		list.add(textBox);
 		list.add(textKeyboard);
 		return list;
+	}
+	public BoxContainer manyGradientBoxes(){
+		BoxContainer ret = new BoxContainer();
+		
+		Box b = new Box(5, 5);
+			b.setColorGradient(new RadialGradient(new Point(3,3), new Point(10,10), new Color(0.1f, 0.3f, 0.6f), new Color(1.0f, 0.0f, 0.0f), true));
+			BatchCommand batch = new BatchCommand(-1);
+				Command a = new ChangeCommand(5, 1.0f, 0.0f,1.0f, 10, ChangeCommand.GRADIENT_COLOR_FROM_B);
+				batch.addCommand(a);
+			b.addCommand(batch);
+		ret.add(b);
+		return ret;
 	}
 }

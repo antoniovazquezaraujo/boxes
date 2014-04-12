@@ -24,7 +24,7 @@ package com.formatic.boxes.widgets;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.gdx.graphics.Color;
+import com.formatic.boxes.Color;
 import com.formatic.boxes.widgets.events.BoxEventListener;
 import com.formatic.boxes.widgets.events.ButtonListener;
 import com.formatic.boxes.widgets.events.TextKeyboardListener;

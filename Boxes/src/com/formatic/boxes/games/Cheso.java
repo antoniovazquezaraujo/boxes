@@ -21,8 +21,10 @@
 */
 package com.formatic.boxes.games;
 
-import com.badlogic.gdx.graphics.Color;
+
+import com.formatic.boxes.Color;
 import com.formatic.boxes.Point;
+import com.formatic.boxes.commands.BatchCommand;
 import com.formatic.boxes.commands.ChangeCommand;
 import com.formatic.boxes.widgets.Box;
 import com.formatic.boxes.widgets.BoxContainer;
@@ -107,16 +109,26 @@ class Horse extends Piece {
 
 	@Override
 	void addAnimations() {
-		int times = 3;
-		float rangeTime = 0.1f;
-		float fromValue = 0.7f;
+		BatchCommand batch = new BatchCommand(3);
+		int times = 1;
+		float rangeTime = 0.001f;
+		float fromValue = 0.7005f;
 		float toValue = 0.7001f;
 		int step = 1;
 		ChangeCommand change = new ChangeCommand(times, rangeTime, fromValue,
 													toValue, step, changeTarget);
-		addCommand(change);
+		batch.addCommand(change);	
+		
 		fromValue = 0.5001f;
-		toValue = 0.5f;
+		toValue = 0.5005f;
+		change = new ChangeCommand(times, rangeTime, fromValue, toValue, step,
+									changeTarget);
+		batch.addCommand(change);
+		addCommand(batch);
+		times = 1;
+		rangeTime = 30.0f;
+		fromValue = 0.5001f;
+		toValue = 0.5005f;
 		change = new ChangeCommand(times, rangeTime, fromValue, toValue, step,
 									changeTarget);
 		addCommand(change);
@@ -182,14 +194,14 @@ class Bishop extends Piece {
 	void addAnimations() {
 		int times = 1;
 		float rangeTime = 150;
-		float fromValue = 0.8f;
-		float toValue = 0.4f;
+		float fromValue = 0.9f;
+		float toValue = 0.3f;
 		int step = 1;
 		ChangeCommand change = new ChangeCommand(times, rangeTime, fromValue,
 													toValue, step, changeTarget);
 		addCommand(change);
-		toValue = 0.8f;
-		fromValue = 0.4f;
+		toValue = 0.9f;
+		fromValue = 0.3f;
 
 		change = new ChangeCommand(times, rangeTime, fromValue, toValue, step,
 									changeTarget);

@@ -21,13 +21,13 @@
 */
 package com.formatic.boxes.widgets;
 
-import com.badlogic.gdx.graphics.Color;
+import com.formatic.boxes.Color;
 import com.formatic.boxes.ColorGradient;
-import com.formatic.boxes.Command;
 import com.formatic.boxes.Dimension;
 import com.formatic.boxes.Point;
 import com.formatic.boxes.ScreenModel;
 import com.formatic.boxes.commands.BatchCommand;
+import com.formatic.boxes.commands.Command;
 import com.formatic.boxes.widgets.events.BoxDisplayListener;
 import com.formatic.boxes.widgets.events.BoxEventListener;
 
@@ -248,6 +248,15 @@ public class Box implements BoxEventListener, BoxDisplayListener {
 		return null;
 	}
 
+	public void setHue(float hue){
+		this.color.setHue(hue);
+	}
+	public void setSaturation(float saturation){
+		this.color.setSaturation(saturation);
+	}
+	public void setBrightness(float brightness){
+		this.color.setBrightness(brightness);
+	}
 	public void setRed(float r) {
 		this.color.r = r;
 	}

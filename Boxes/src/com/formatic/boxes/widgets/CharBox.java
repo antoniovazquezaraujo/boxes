@@ -21,7 +21,8 @@
 */
 package com.formatic.boxes.widgets;
 
-import com.badlogic.gdx.graphics.Color;
+
+import com.formatic.boxes.Color;
 import com.formatic.boxes.Dimension;
 import com.formatic.boxes.Font;
 import com.formatic.boxes.Point;

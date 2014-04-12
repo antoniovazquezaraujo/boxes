@@ -28,7 +28,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.badlogic.gdx.graphics.Color;
 import com.formatic.boxes.widgets.Box;
 import com.formatic.boxes.widgets.BoxList;
 import com.formatic.boxes.widgets.BoxList.LayoutType;

@@ -21,7 +21,8 @@
 */
 package com.formatic.boxes.widgets;
 
-import com.badlogic.gdx.graphics.Color;
+
+import com.formatic.boxes.Color;
 import com.formatic.boxes.widgets.events.ButtonListener;
 
 public class Button extends Box {
