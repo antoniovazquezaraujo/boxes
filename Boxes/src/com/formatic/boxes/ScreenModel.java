@@ -190,6 +190,9 @@ public class ScreenModel {
 						&& x<position.x+size.width
 						&& y<position.y+size.height
 						){
+					/*
+					 * Hacer que el gradiente se muestre relativo a la posicion del box!
+					 */
 			        Color theColor = colorGradient.getColor(new Point(x,y));
 					addColor(x,y, theColor);
 				}

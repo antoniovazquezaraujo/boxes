@@ -24,7 +24,11 @@ package com.formatic.boxes;
 
 import com.formatic.boxes.commands.BatchCommand;
 import com.formatic.boxes.commands.ChangeCommand;
+import com.formatic.boxes.commands.ColorBrightnessChanger;
+import com.formatic.boxes.commands.ColorToneChanger;
 import com.formatic.boxes.commands.Command;
+import com.formatic.boxes.commands.ProcessCommand;
+import com.formatic.boxes.commands.SymmetricalSizeChanger;
 import com.formatic.boxes.games.Cheso;
 import com.formatic.boxes.widgets.Box;
 import com.formatic.boxes.widgets.BoxContainer;
@@ -495,13 +499,28 @@ public class Demo {
 	public BoxContainer manyGradientBoxes(){
 		BoxContainer ret = new BoxContainer();
 		
-		Box b = new Box(5, 5);
-			b.setColorGradient(new RadialGradient(new Point(3,3), new Point(10,10), new Color(0.1f, 0.3f, 0.6f), new Color(1.0f, 0.0f, 0.0f), true));
-			BatchCommand batch = new BatchCommand(-1);
-				Command a = new ChangeCommand(5, 1.0f, 0.0f,1.0f, 10, ChangeCommand.GRADIENT_COLOR_FROM_B);
-				batch.addCommand(a);
-			b.addCommand(batch);
-		ret.add(b);
+		Box box = new Box(3,3,1,1, new Color(0.3f, 0.4f,0.7f,1.0f));
+		box.setBrightness(1.0f);
+		box.setSaturation(1.0f);
+			//box.setColorGradient(new RadialGradient(new Point(0,0), new Point(6,6), new Color(0.9f, 0.9f, 0.6f), new Color(0.0f, 0.1f, 0.02f), true));
+			BatchCommand batch = new BatchCommand(1);
+			
+			ProcessCommand proc1 = new ProcessCommand(1);
+			proc1.addCommand(new SymmetricalSizeChanger(1, 150.f, 0.0f,8.0f, 2));
+			proc1.addCommand(new ColorBrightnessChanger(1, 150.0f, 0.0f, 1.0f, 2));
+			batch.addCommand(proc1);
+			
+			Command d2 = new ColorBrightnessChanger(1, 50.0f, 1.0f, 0.0f, 2);
+			batch.addCommand(d2);
+			
+			ProcessCommand proc2 = new ProcessCommand(1);
+			proc2.addCommand(new SymmetricalSizeChanger(1, 15.0f, 8.0f,0.0f, 2));
+			proc2.addCommand(new ColorBrightnessChanger(1, 15.0f, 0.0f, 1.0f, 2));
+			proc2.addCommand(new ColorToneChanger(1, 15.0f, 0.0f, 1.0f, 2));
+
+			batch.addCommand(proc2);
+			box.addCommand(batch);
+		ret.add(box);
 		return ret;
 	}
 }

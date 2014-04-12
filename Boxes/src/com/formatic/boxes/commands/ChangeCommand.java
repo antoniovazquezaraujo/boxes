@@ -26,10 +26,7 @@ class ChangeType {
 	final static int FIXED = 1;
 	final static int GRADIENT = 2;
 }
-/*
- * THIS IS NOT OBJECT ORIENTED AT ALL!!!!!
- * I KNOW I MUST REFACTOR THIS!!!
- */
+
 public class ChangeCommand extends Command {
 	public final static int LOCATION_X = 0;
 	public final static int LOCATION_Y = 1;
