@@ -20,6 +20,10 @@
     along with Boxes.  If not, see <http://www.gnu.org/licenses/>.
 */
 package com.formatic.boxes.widgets.events;
+
+import com.badlogic.gdx.graphics.Color;
+
 public interface TextKeyboardListener {
 	void charSelected(char c);
+	void charNameShowed(char c, String colorName, Color color);
 } 

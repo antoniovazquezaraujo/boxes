@@ -71,8 +71,8 @@ class King extends Piece {
 	void addAnimations() {
 		int times = 1;
 		float rangeTime = 1;
-		float fromValue = 0.7f;
-		float toValue = 0.7001f;
+		float fromValue = 0.3f;
+		float toValue = 0.3001f;
 		int step = 0;
 		ChangeCommand change = new ChangeCommand(times, rangeTime, fromValue,
 													toValue, step, changeTarget);
@@ -102,7 +102,7 @@ class Queen extends Piece {
 class Horse extends Piece {
 	Horse(int x, int y, ChessColor color) {
 		super(x, y, color);
-		setAlpha(0.5f);
+		//setAlpha(0.5f);
 	}
 
 	@Override
@@ -153,7 +153,7 @@ class Tower extends Piece {
 class Pawn extends Piece {
 	Pawn(int x, int y, ChessColor color) {
 		super(x, y, color);
-		setAlpha(0.5f);
+		//setAlpha(0.5f);
 	}
 
 	@Override

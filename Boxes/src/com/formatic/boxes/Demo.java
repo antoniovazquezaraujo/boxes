@@ -475,6 +475,13 @@ public class Demo {
 			public void charSelected(char c) {
 				textBox.addText(""+c);
 			}
+
+			@Override
+			public void charNameShowed(char c, String colorName, Color color) {
+				textBox.setFontColor(color);
+				textBox.setText(colorName.toUpperCase());
+				
+			}
 		});
 		BoxList list = new BoxList(LayoutType.VERTICAL);
 		list.add(textBox);
