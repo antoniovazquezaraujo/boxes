@@ -90,7 +90,8 @@ public class Box implements BoxEventListener, BoxDisplayListener {
 	}
 
 	public void setColor(Color color) {
-		this.color.set(color);
+		//this.color.set(color);
+		this.color = color;
 	}
 	public void setColor(float r, float g, float b, float a){
 		this.color.set(r,g,b,a);

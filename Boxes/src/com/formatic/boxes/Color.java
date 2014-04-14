@@ -16,7 +16,7 @@ public class Color extends com.badlogic.gdx.graphics.Color{
 			}
 		}
 	}
-	enum Mode {
+	public enum Mode {
 		RGB, HSB
 	}
 	private Mode mode;
@@ -111,6 +111,12 @@ public class Color extends com.badlogic.gdx.graphics.Color{
 	}
 
 	public void updateFromHSBToRGB() {
+		assert(hue<=1.0f);
+		assert(saturation<=1.0f);
+		assert(brightness<=1.0f);
+		assert(hue>=0.0f);
+		assert(saturation>=0.0f);
+		assert(brightness>=0.0f);
 		float h = (hue - (float) Math.floor(hue)) * 6.0f;
 		float f = h - (float) java.lang.Math.floor(h);
 		float p = brightness * (1 - saturation);
@@ -150,7 +156,7 @@ public class Color extends com.badlogic.gdx.graphics.Color{
 		if (b < cmin)
 			cmin = b;
 
-		brightness = ((float) cmax) / 100.0f;
+		brightness = ((float) cmax) /100.0f;
 		if (cmax != 0)
 			saturation = ((float) (cmax - cmin)) / ((float) cmax);
 		else
@@ -171,5 +177,12 @@ public class Color extends com.badlogic.gdx.graphics.Color{
 			if (hue < 0)
 				hue = hue + 1.0f;
 		}
+		assert(hue<=1.0f);
+		assert(saturation<=1.0f);
+		assert(brightness<=1.0f);
+		assert(hue>=0.0f);
+		assert(saturation>=0.0f);
+		assert(brightness>=0.0f);
+
 	}	
 }

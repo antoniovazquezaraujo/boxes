@@ -25,7 +25,7 @@ package com.formatic.boxes.games;
 import com.formatic.boxes.Color;
 import com.formatic.boxes.Point;
 import com.formatic.boxes.commands.BatchCommand;
-import com.formatic.boxes.commands.ChangeCommand;
+import com.formatic.boxes.commands.ColorChanger;
 import com.formatic.boxes.widgets.Box;
 import com.formatic.boxes.widgets.BoxContainer;
 import com.formatic.boxes.widgets.events.BoxEventListener;
@@ -35,17 +35,22 @@ enum ChessColor {
 }
 
 class Piece extends Box {
-	protected int changeTarget;
+	final float BLACK_HUE = 0.0f;
+	final float WHITE_HUE = 0.240f;
 	private Board board;
 	ChessColor chessColor;
 
 	Piece(int x, int y, ChessColor color) {
 		setX(x);
 		setY(y);
-		setColor(new Color(0, 0, 0, 1));
 		chessColor = color;
-		changeTarget = chessColor == ChessColor.WHITE	? ChangeCommand.COLOR_R
-														: ChangeCommand.COLOR_G;
+		if(chessColor == ChessColor.BLACK){
+			setHue(BLACK_HUE);
+		}else{
+			setHue(WHITE_HUE);
+		}
+		setSaturation(1.0f);
+		setBrightness(1.0f);
 		addAnimations();
 	}
 
@@ -66,7 +71,6 @@ class Piece extends Box {
 class King extends Piece {
 	King(int x, int y, ChessColor color) {
 		super(x, y, color);
-		setAlpha(1.0f);
 	}
 
 	@Override
@@ -76,8 +80,8 @@ class King extends Piece {
 		float fromValue = 0.3f;
 		float toValue = 0.3001f;
 		int step = 0;
-		ChangeCommand change = new ChangeCommand(times, rangeTime, fromValue,
-													toValue, step, changeTarget);
+		ColorChanger change = new ColorChanger(times, rangeTime, fromValue,
+													toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
 	}
 }
@@ -94,8 +98,8 @@ class Queen extends Piece {
 		float fromValue = 0.7f;
 		float toValue = 0.5f;
 		int step = 1;
-		ChangeCommand change = new ChangeCommand(times, rangeTime, fromValue,
-													toValue, step, changeTarget);
+		ColorChanger change = new ColorChanger(times, rangeTime, fromValue,
+													toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
 	}
 
@@ -104,7 +108,6 @@ class Queen extends Piece {
 class Horse extends Piece {
 	Horse(int x, int y, ChessColor color) {
 		super(x, y, color);
-		//setAlpha(0.5f);
 	}
 
 	@Override
@@ -115,22 +118,22 @@ class Horse extends Piece {
 		float fromValue = 0.7005f;
 		float toValue = 0.7001f;
 		int step = 1;
-		ChangeCommand change = new ChangeCommand(times, rangeTime, fromValue,
-													toValue, step, changeTarget);
+		ColorChanger change = new ColorChanger(times, rangeTime, fromValue,
+													toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
 		batch.addCommand(change);	
 		
 		fromValue = 0.5001f;
 		toValue = 0.5005f;
-		change = new ChangeCommand(times, rangeTime, fromValue, toValue, step,
-									changeTarget);
+		change = new ColorChanger(times, rangeTime, fromValue, toValue, step,
+									ColorChanger.ColorChangeType.BRIGHTNESS);
 		batch.addCommand(change);
 		addCommand(batch);
 		times = 1;
 		rangeTime = 30.0f;
 		fromValue = 0.5001f;
 		toValue = 0.5005f;
-		change = new ChangeCommand(times, rangeTime, fromValue, toValue, step,
-									changeTarget);
+		change = new ColorChanger(times, rangeTime, fromValue, toValue, step,
+									ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
 	}
 
@@ -139,7 +142,6 @@ class Horse extends Piece {
 class Tower extends Piece {
 	Tower(int x, int y, ChessColor color) {
 		super(x, y, color);
-		setAlpha(1.0f);
 	}
 
 	@Override
@@ -149,13 +151,13 @@ class Tower extends Piece {
 		float fromValue = 0.7f;
 		float toValue = 0.7001f;
 		int step = 0;
-		ChangeCommand change = new ChangeCommand(times, rangeTime, fromValue,
-													toValue, step, changeTarget);
+		ColorChanger change = new ColorChanger(times, rangeTime, fromValue,
+													toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
 		fromValue = 0.5001f;
 		toValue = 0.5f;
-		change = new ChangeCommand(times, rangeTime, fromValue, toValue, step,
-									changeTarget);
+		change = new ColorChanger(times, rangeTime, fromValue, toValue, step,
+									ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
 
 	}
@@ -165,7 +167,6 @@ class Tower extends Piece {
 class Pawn extends Piece {
 	Pawn(int x, int y, ChessColor color) {
 		super(x, y, color);
-		//setAlpha(0.5f);
 	}
 
 	@Override
@@ -175,8 +176,8 @@ class Pawn extends Piece {
 		float fromValue = 0.7f;
 		float toValue = 0.7001f;
 		int step = 0;
-		ChangeCommand change = new ChangeCommand(times, rangeTime, fromValue,
-													toValue, step, changeTarget);
+		ColorChanger change = new ColorChanger(times, rangeTime, fromValue,
+													toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
 
 	}
@@ -187,7 +188,6 @@ class Bishop extends Piece {
 
 	Bishop(int x, int y, ChessColor color) {
 		super(x, y, color);
-		setAlpha(1.0f);
 	}
 
 	@Override
@@ -197,14 +197,14 @@ class Bishop extends Piece {
 		float fromValue = 0.9f;
 		float toValue = 0.3f;
 		int step = 1;
-		ChangeCommand change = new ChangeCommand(times, rangeTime, fromValue,
-													toValue, step, changeTarget);
+		ColorChanger change = new ColorChanger(times, rangeTime, fromValue,
+													toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
 		toValue = 0.9f;
 		fromValue = 0.3f;
 
-		change = new ChangeCommand(times, rangeTime, fromValue, toValue, step,
-									changeTarget);
+		change = new ColorChanger(times, rangeTime, fromValue, toValue, step,
+									ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
 
 	}

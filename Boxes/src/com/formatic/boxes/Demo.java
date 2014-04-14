@@ -23,12 +23,11 @@ package com.formatic.boxes;
 
 
 import com.formatic.boxes.commands.BatchCommand;
-import com.formatic.boxes.commands.ChangeCommand;
-import com.formatic.boxes.commands.ColorBrightnessChanger;
-import com.formatic.boxes.commands.ColorToneChanger;
+import com.formatic.boxes.commands.ColorChanger;
 import com.formatic.boxes.commands.Command;
+import com.formatic.boxes.commands.PositionChanger;
 import com.formatic.boxes.commands.ProcessCommand;
-import com.formatic.boxes.commands.SymmetricalSizeChanger;
+import com.formatic.boxes.commands.SizeChanger;
 import com.formatic.boxes.games.Cheso;
 import com.formatic.boxes.widgets.Box;
 import com.formatic.boxes.widgets.BoxContainer;
@@ -81,6 +80,7 @@ public class Demo {
 		topBox.add(demoNumberKeyboard2());
 		topBox.add(demoTextKeyboard());
 		topBox.add(manyGradientBoxes());
+		topBox.add(colorsDemo());
 	}
 
 	BoxList demo1() {
@@ -224,34 +224,34 @@ public class Demo {
 											(float) Math.random(),
 											(float) Math.random()));
 					// box.setColorGradient(randomGradient());
-					box.addCommand(new ChangeCommand(
+					box.addCommand(new PositionChanger(
 														1,
 														8,
 														0,
 														7,
 														0,
-														ChangeCommand.LOCATION_X));
-					box.addCommand(new ChangeCommand(
+														PositionChanger.MoveType.HORIZONTAL));
+					box.addCommand(new PositionChanger(
 														1,
 														8,
 														0,
 														7,
 														0,
-														ChangeCommand.LOCATION_Y));
-					box.addCommand(new ChangeCommand(
+														PositionChanger.MoveType.VERTICAL));
+					box.addCommand(new PositionChanger(
 														1,
 														8,
 														7,
 														0,
 														0,
-														ChangeCommand.LOCATION_X));
-					box.addCommand(new ChangeCommand(
+														PositionChanger.MoveType.HORIZONTAL));
+					box.addCommand(new PositionChanger(
 														1,
 														8,
 														7,
 														0,
 														0,
-														ChangeCommand.LOCATION_Y));
+														PositionChanger.MoveType.VERTICAL));
 					p.add(box);
 				}
 				return true;
@@ -299,10 +299,10 @@ public class Demo {
 
 				int max = (int) (Math.random() * 50);
 				Command command;
-				for (int n = 0; n < max; n++) {
-					command = ChangeCommand.randomCommand();
-					box.addCommand(command);
-				}
+//				for (int n = 0; n < max; n++) {
+//					command = ChangeCommand.randomCommand();
+//					box.addCommand(command);
+//				}
 				commandsBox.add(box);
 				return true;
 			}
@@ -499,28 +499,117 @@ public class Demo {
 	public BoxContainer manyGradientBoxes(){
 		BoxContainer ret = new BoxContainer();
 		
-		Box box = new Box(3,3,1,1, new Color(0.3f, 0.4f,0.7f,1.0f));
+		Box box = new Box(3,3,2,2, new Color(0.3f, 0.4f,0.7f,1.0f));
 		box.setBrightness(1.0f);
 		box.setSaturation(1.0f);
-			//box.setColorGradient(new RadialGradient(new Point(0,0), new Point(6,6), new Color(0.9f, 0.9f, 0.6f), new Color(0.0f, 0.1f, 0.02f), true));
 			BatchCommand batch = new BatchCommand(1);
-			
-			ProcessCommand proc1 = new ProcessCommand(1);
-			proc1.addCommand(new SymmetricalSizeChanger(1, 150.f, 0.0f,8.0f, 2));
-			proc1.addCommand(new ColorBrightnessChanger(1, 150.0f, 0.0f, 1.0f, 2));
-			batch.addCommand(proc1);
-			
-			Command d2 = new ColorBrightnessChanger(1, 50.0f, 1.0f, 0.0f, 2);
-			batch.addCommand(d2);
-			
+			batch.addCommand(new SizeChanger(1, 15.f, 2.0f,8.0f, 2, true, SizeChanger.ChangeType.HEIGHT));
+			batch.addCommand(new SizeChanger(1, 15.f, 2.0f,8.0f, 2, true, SizeChanger.ChangeType.WIDTH));
+			batch.addCommand(new ColorChanger(1, 45.0f, 1.0f, 0.0f, 2, ColorChanger.ColorChangeType.HUE));
+			batch.addCommand(new SizeChanger(1, 15.f, 8.0f,2.0f, 2, true, SizeChanger.ChangeType.HEIGHT));
+			batch.addCommand(new SizeChanger(1, 15.f, 8.0f,2.0f, 2, true, SizeChanger.ChangeType.WIDTH));
 			ProcessCommand proc2 = new ProcessCommand(1);
-			proc2.addCommand(new SymmetricalSizeChanger(1, 15.0f, 8.0f,0.0f, 2));
-			proc2.addCommand(new ColorBrightnessChanger(1, 15.0f, 0.0f, 1.0f, 2));
-			proc2.addCommand(new ColorToneChanger(1, 15.0f, 0.0f, 1.0f, 2));
-
+			proc2.addCommand(new ColorChanger(1, 15.0f, 0.0f, 1.0f, 2, ColorChanger.ColorChangeType.BRIGHTNESS));
 			batch.addCommand(proc2);
 			box.addCommand(batch);
 		ret.add(box);
+		return ret;
+	}
+	public BoxContainer colorsDemo(){
+		final BoxContainer ret = new BoxContainer();
+		float hue = 0.0f;
+		float inc = 1.0f/64.0f;
+		for(int n=0; n<8; n++){
+			for(int m=0; m<8;m++){
+				ret.add(new Box(n,m,1,1, new Color(hue, 1.0f, 1.0f, Color.Mode.HSB)));
+				hue+=inc;
+			}
+		}
+		ret.setBoxEventListener(new BoxEventAdapter() {
+			
+			@Override
+			public boolean onRelease(int x, int y) {
+				reloadBoxes(x,y);
+				return true;
+			}
+
+			private void reloadBoxes(int x, int y) {
+				Box selected = ret.boxAtPos(new Point(x,y));
+				float hue = selected.getColor().getHue();
+				float inc = 1.0f/128.0f;
+				hue -= ((y*8+x)/2 * inc);
+				for(int n=0; n<8; n++){
+					for(int m=0; m<8;m++){
+						Box next = ret.boxAtPos(new Point(n,m));
+						next.setHue(hue);
+						hue+=inc;
+					}
+				}
+			}
+
+			@Override
+			public boolean onDrag(int x, int y, int newX, int newY) {
+				if(newX != x){
+					if(newX > x){
+						incBrightness();
+					}else{
+						decBrightness();
+					}
+				}else if(newY != y){
+					if(newY > y){
+						incSaturation();
+					}else{
+						decSaturation();
+					}
+				}
+				return true;
+			}
+
+			private void incSaturation() {
+				for(int n=0; n<8; n++){
+					for(int m=0; m<8;m++){
+						Box b = ret.boxAtPos(new Point(n,m));
+						float s = b.getColor().getSaturation();
+						if(s < 1.0f){
+							b.getColor().setSaturation(s+0.1f);
+						}
+					}
+				}
+			}
+			private void decSaturation() {
+				for(int n=0; n<8; n++){
+					for(int m=0; m<8;m++){
+						Box b = ret.boxAtPos(new Point(n,m));
+						float s = b.getColor().getSaturation();
+						if(s >= 0.1f){
+							b.getColor().setSaturation(s-0.1f);
+						}
+					}
+				}
+			}
+			private void incBrightness() {
+				for(int n=0; n<8; n++){
+					for(int m=0; m<8;m++){
+						Box b = ret.boxAtPos(new Point(n,m));
+						float s = b.getColor().getBrightness();
+						if(s < 1.0f){
+							b.getColor().setBrightness(s+0.1f);
+						}
+					}
+				}				
+			}
+			private void decBrightness() {
+				for(int n=0; n<8; n++){
+					for(int m=0; m<8;m++){
+						Box b = ret.boxAtPos(new Point(n,m));
+						float s = b.getColor().getBrightness();
+						if(s >= 0.1f){
+							b.getColor().setBrightness(s-0.1f);
+						}
+					}
+				}
+			}
+		});
 		return ret;
 	}
 }
