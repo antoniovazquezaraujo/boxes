@@ -27,7 +27,7 @@ import com.formatic.boxes.Font;
 import com.formatic.boxes.ScreenModel;
 
 public class TextBox extends BoxList {
-	final static int MAX_TURNS = 10;
+	final static int MAX_TURNS = 5;
 	String text;
 	Font font;
 	private int speed = 1;
@@ -44,12 +44,18 @@ public class TextBox extends BoxList {
 
 	public void setFontColor(Color fontColor) {
 		this.fontColor = fontColor;
+		if(fontColor.getBrightness() > 0.5f){
+			color.setBrightness(0.0f);
+		}		
 	}
 
 	TextBox(Font font, String text) {
 		super(LayoutType.HORIZONTAL);
 		this.font = font;
 		this.fontColor = new Color(1, 0, 0, 1);
+		if(fontColor.getBrightness() > 0.5f){
+			color.setBrightness(0.0f);
+		}
 		setText(text);
 
 	}
@@ -67,11 +73,20 @@ public class TextBox extends BoxList {
 	}
 
 	private void updateBoxes() {
-		float c = 0.99f;
 		Color tmpColor = new Color(fontColor);
+		float brightness = tmpColor.getBrightness();
+		if (brightness == 0.0f){
+			brightness= 0.3f;
+		}
+		boolean even=true;
 		for (int n = 0; n < text.length(); n++) {
 			tmpColor = new Color(tmpColor);
-			tmpColor.mul(c);
+			if(even){
+				tmpColor.setBrightness(brightness-0.3f);
+			}else{
+				tmpColor.setBrightness(brightness);				
+			}
+			even = !even;
 			add(new CharBox(font, text.charAt(n), tmpColor));
 		}
 	}

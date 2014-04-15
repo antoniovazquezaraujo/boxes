@@ -18,9 +18,8 @@
 
     You should have received a copy of the GNU General Public License
     along with Boxes.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package com.formatic.boxes;
-
 
 import com.formatic.boxes.commands.BatchCommand;
 import com.formatic.boxes.commands.ColorChanger;
@@ -115,15 +114,15 @@ public class Demo {
 	BoxList demo5() {
 		BoxList cinco = new BoxList();
 		cinco.add(new TextBox(
-								Font.TYPE_55,
-								"ESTO NO PARECE TAN COMPLICADO UNA VEZ QUE TE PASAS UNA ETERNIDAD INTENTANDO ENTENDERLO"));
+				Font.TYPE_55,
+				"ESTO NO PARECE TAN COMPLICADO UNA VEZ QUE TE PASAS UNA ETERNIDAD INTENTANDO ENTENDERLO"));
 		return cinco;
 	}
 
 	BoxList demo6() {
 		BoxList seis = new BoxList();
 		seis.add(new TextBox(Font.TYPE_45,
-								"SI FUESE DIOS SERIA INCAPAZ DE CONTESTAR A MIS PROPIAS PREGUNTAS"));
+				"SI FUESE DIOS SERIA INCAPAZ DE CONTESTAR A MIS PROPIAS PREGUNTAS"));
 		return seis;
 	}
 
@@ -136,8 +135,8 @@ public class Demo {
 	BoxList demo8() {
 		BoxList ocho = new BoxList();
 		ocho.add(new TextBox(
-								Font.TYPE_33,
-								"SI AHORRAS EN ESPACIO PARA AHORRAR TIEMPO PUEDES CREAR UNA PERTURBACION EN LA FUERZA"));
+				Font.TYPE_33,
+				"SI AHORRAS EN ESPACIO PARA AHORRAR TIEMPO PUEDES CREAR UNA PERTURBACION EN LA FUERZA"));
 		return ocho;
 	}
 
@@ -152,9 +151,8 @@ public class Demo {
 	BoxContainer testRadialGradient() {
 		BoxContainer p = new BoxContainer();
 		radialGradient = new RadialGradient(new Point(3, 3), new Point(7, 7),
-											new Color(0.4f, 0.1f, 0.8f, 1.0f),
-											new Color(0.0f, 0.0f, 0.0f, 1.0f),
-											false);
+				new Color(0.4f, 0.1f, 0.8f, 1.0f), new Color(0.0f, 0.0f, 0.0f,
+						1.0f), false);
 		p.setColorGradient(radialGradient);
 		p.setBoxEventListener(new BoxEventAdapter() {
 			@Override
@@ -180,9 +178,8 @@ public class Demo {
 	BoxContainer testLinearGradient() {
 		BoxContainer p = new BoxContainer();
 		linearGradient = new LinearGradient(new Point(3, 3), new Point(7, 7),
-											new Color(0.0f, 1.0f,0.0f, 1.0f),
-											new Color(0.0f, 0.0f, 0.0f, 1.0f),
-											false);
+				new Color(0.0f, 1.0f, 0.0f, 1.0f), new Color(0.0f, 0.0f, 0.0f,
+						1.0f), false);
 		p.setColorGradient(linearGradient);
 		p.setBoxEventListener(new BoxEventAdapter() {
 
@@ -219,44 +216,22 @@ public class Demo {
 				movingPlane.add(p);
 				for (int a = 0; a < 10; a++) {
 					Box box = new Box();
-					box.setColor(new Color((float) Math.random(),
-											(float) Math.random(),
-											(float) Math.random(),
-											(float) Math.random()));
+					box.setColor(new Color((float) Math.random(), (float) Math
+							.random(), (float) Math.random(), (float) Math
+							.random()));
 					// box.setColorGradient(randomGradient());
-					box.addCommand(new PositionChanger(
-														1,
-														8,
-														0,
-														7,
-														0,
-														PositionChanger.MoveType.HORIZONTAL));
-					box.addCommand(new PositionChanger(
-														1,
-														8,
-														0,
-														7,
-														0,
-														PositionChanger.MoveType.VERTICAL));
-					box.addCommand(new PositionChanger(
-														1,
-														8,
-														7,
-														0,
-														0,
-														PositionChanger.MoveType.HORIZONTAL));
-					box.addCommand(new PositionChanger(
-														1,
-														8,
-														7,
-														0,
-														0,
-														PositionChanger.MoveType.VERTICAL));
+					box.addCommand(new PositionChanger(1, 8, 0, 7, 0,
+							PositionChanger.MoveType.HORIZONTAL));
+					box.addCommand(new PositionChanger(1, 8, 0, 7, 0,
+							PositionChanger.MoveType.VERTICAL));
+					box.addCommand(new PositionChanger(1, 8, 7, 0, 0,
+							PositionChanger.MoveType.HORIZONTAL));
+					box.addCommand(new PositionChanger(1, 8, 7, 0, 0,
+							PositionChanger.MoveType.VERTICAL));
 					p.add(box);
 				}
 				return true;
 			}
-
 
 		});
 		return movingPlane;
@@ -269,40 +244,31 @@ public class Demo {
 		commandsBox.setBoxEventListener(new BoxEventAdapter() {
 			@Override
 			public boolean onTouch(int x, int y) {
-				Box box = new Box((int) (Math.random() * 8),
-									(int) (Math.random() * 8),
-									(int) (Math.random() * 8),
-									(int) (Math.random() * 8),
-									new Color((float) (Math.random()),
-												(float) (Math.random()),
-												(float) (Math.random()),
-												(float) (Math.random())));
+				Box box = new Box((int) (Math.random() * 8), (int) (Math
+						.random() * 8), (int) (Math.random() * 8), (int) (Math
+						.random() * 8), new Color((float) (Math.random()),
+						(float) (Math.random()), (float) (Math.random()),
+						(float) (Math.random())));
 				Color fromColor = new Color((float) (Math.random()),
-											(float) (Math.random()),
-											(float) (Math.random()),
-											(float) (Math.random()));
+						(float) (Math.random()), (float) (Math.random()),
+						(float) (Math.random()));
 				Color toColor = new Color((float) (Math.random()),
-											(float) (Math.random()),
-											(float) (Math.random()),
-											(float) (Math.random()));
+						(float) (Math.random()), (float) (Math.random()),
+						(float) (Math.random()));
 				if (Math.random() > 0.5) {
 					box.setColorGradient(new RadialGradient(Point.random(),
-															Point.random(),
-															fromColor, toColor,
-															false));
+							Point.random(), fromColor, toColor, false));
 				} else {
 					box.setColorGradient(new LinearGradient(Point.random(),
-															Point.random(),
-															fromColor, toColor,
-															false));
+							Point.random(), fromColor, toColor, false));
 				}
 
 				int max = (int) (Math.random() * 50);
 				Command command;
-//				for (int n = 0; n < max; n++) {
-//					command = ChangeCommand.randomCommand();
-//					box.addCommand(command);
-//				}
+				// for (int n = 0; n < max; n++) {
+				// command = ChangeCommand.randomCommand();
+				// box.addCommand(command);
+				// }
 				commandsBox.add(box);
 				return true;
 			}
@@ -322,7 +288,7 @@ public class Demo {
 		final BoxContainer p = new BoxContainer();
 		p.add(ret);
 		p.setBoxEventListener(new BoxEventListener() {
-			
+
 			private Box movingBox;
 
 			@Override
@@ -330,31 +296,31 @@ public class Demo {
 				// TODO Auto-generated method stub
 				return false;
 			}
-			
+
 			@Override
 			public boolean onTouchCancel(int x, int y) {
 				// TODO Auto-generated method stub
 				return false;
 			}
-			
+
 			@Override
 			public boolean onTouch(int x, int y) {
-				Box touched = p.boxAtPos(new Point(x,y));
-				if(touched!= null){
+				Box touched = p.boxAtPos(new Point(x, y));
+				if (touched != null) {
 					movingBox = touched;
 				}
 				return false;
 			}
-			
+
 			@Override
 			public boolean onRelease(int x, int y) {
 				movingBox = null;
 				return false;
 			}
-			
+
 			@Override
 			public boolean onDrag(int x, int y, int newX, int newY) {
-				if(movingBox!= null){
+				if (movingBox != null) {
 					movingBox.setX(newX);
 					movingBox.setY(newY);
 				}
@@ -366,11 +332,9 @@ public class Demo {
 
 	public BoxContainer demoRotator1() {
 		final CharBox rotatorCharUnidades = new CharBox(new Font(Font.TYPE_24),
-														'0', new Color(0.6f, 0,
-																		0, 1));
+				'0', new Color(0.6f, 0, 0, 1));
 		final CharBox rotatorCharDecenas = new CharBox(new Font(Font.TYPE_24),
-														'0', new Color(0.9f, 0,
-																		0, 1));
+				'0', new Color(0.9f, 0, 0, 1));
 		Rotator rotator = new Rotator(0, 99, 0);
 		rotator.setRotatorListener(new RotatorListener() {
 			public void numberSelected(int number) {
@@ -389,11 +353,9 @@ public class Demo {
 
 	public BoxContainer demoRotator2() {
 		final CharBox rotatorCharUnidades = new CharBox(new Font(Font.TYPE_35),
-														'0', new Color(0, 0.6f,
-																		0, 1));
+				'0', new Color(0, 0.6f, 0, 1));
 		final CharBox rotatorCharDecenas = new CharBox(new Font(Font.TYPE_35),
-														'0', new Color(0, 0.9f,
-																		0, 1));
+				'0', new Color(0, 0.9f, 0, 1));
 		Rotator rotator = new Rotator(0, 99, 0);
 		rotator.setRotatorListener(new RotatorListener() {
 			public void numberSelected(int number) {
@@ -412,26 +374,23 @@ public class Demo {
 
 	public BoxContainer demoNumberKeyboard1() {
 		final CharBox keyboardCharUnidades = new CharBox(
-															new Font(
-																		Font.TYPE_24),
-															'0',
-															new Color(0, 0.6f,
-																		0, 1));
+				new Font(Font.TYPE_24), '0', new Color(0, 0.6f, 0, 1));
 		final CharBox keyboardCharDecenas = new CharBox(new Font(Font.TYPE_24),
-														'0', new Color(0, 0.9f,
-																		0, 1));
+				'0', new Color(0, 0.9f, 0, 1));
 		NumberKeyboard numberKeyboardUnidades = new NumberKeyboard();
-		numberKeyboardUnidades.setNumberKeyboardListener(new NumberKeyboardListener() {
-			public void numberSelected(int number) {
-				keyboardCharUnidades.setNumber(number);
-			}
-		});
+		numberKeyboardUnidades
+				.setNumberKeyboardListener(new NumberKeyboardListener() {
+					public void numberSelected(int number) {
+						keyboardCharUnidades.setNumber(number);
+					}
+				});
 		NumberKeyboard numberKeyboardDecenas = new NumberKeyboard();
-		numberKeyboardDecenas.setNumberKeyboardListener(new NumberKeyboardListener() {
-			public void numberSelected(int number) {
-				keyboardCharDecenas.setNumber(number);
-			}
-		});
+		numberKeyboardDecenas
+				.setNumberKeyboardListener(new NumberKeyboardListener() {
+					public void numberSelected(int number) {
+						keyboardCharDecenas.setNumber(number);
+					}
+				});
 		BoxList list = new BoxList(LayoutType.VERTICAL);
 		BoxList chars = new BoxList(LayoutType.HORIZONTAL);
 		chars.add(keyboardCharDecenas);
@@ -443,28 +402,26 @@ public class Demo {
 		list.add(keyboards);
 		return list;
 	}
+
 	public BoxContainer demoNumberKeyboard2() {
 		final CharBox keyboardCharUnidades = new CharBox(
-															new Font(
-																		Font.TYPE_45),
-															'0',
-															new Color(0, 0.6f,
-																		0, 1));
+				new Font(Font.TYPE_45), '0', new Color(0, 0.6f, 0, 1));
 		final CharBox keyboardCharDecenas = new CharBox(new Font(Font.TYPE_45),
-														'0', new Color(0, 0.9f,
-																		0, 1));
+				'0', new Color(0, 0.9f, 0, 1));
 		NumberKeyboard numberKeyboardUnidades = new NumberKeyboard();
-		numberKeyboardUnidades.setNumberKeyboardListener(new NumberKeyboardListener() {
-			public void numberSelected(int number) {
-				keyboardCharUnidades.setNumber(number);
-			}
-		});
+		numberKeyboardUnidades
+				.setNumberKeyboardListener(new NumberKeyboardListener() {
+					public void numberSelected(int number) {
+						keyboardCharUnidades.setNumber(number);
+					}
+				});
 		NumberKeyboard numberKeyboardDecenas = new NumberKeyboard();
-		numberKeyboardDecenas.setNumberKeyboardListener(new NumberKeyboardListener() {
-			public void numberSelected(int number) {
-				keyboardCharDecenas.setNumber(number);
-			}
-		});
+		numberKeyboardDecenas
+				.setNumberKeyboardListener(new NumberKeyboardListener() {
+					public void numberSelected(int number) {
+						keyboardCharDecenas.setNumber(number);
+					}
+				});
 		BoxList list = new BoxList(LayoutType.VERTICAL);
 		BoxList chars = new BoxList(LayoutType.HORIZONTAL);
 		chars.add(keyboardCharDecenas);
@@ -476,19 +433,20 @@ public class Demo {
 		list.add(keyboards);
 		return list;
 	}
+
 	public BoxContainer demoTextKeyboard() {
-		final TextBox textBox = new TextBox(Font.TYPE_33," ");
-		TextKeyboard textKeyboard= new TextKeyboard();
+		final TextBox textBox = new TextBox(Font.TYPE_33, " ");
+		TextKeyboard textKeyboard = new TextKeyboard();
 		textKeyboard.setTextKeyboardListener(new TextKeyboardListener() {
 			public void charSelected(char c) {
-				textBox.addText(""+c);
+				textBox.addText("" + c);
 			}
 
 			@Override
 			public void charNameShowed(char c, String colorName, Color color) {
 				textBox.setFontColor(color);
 				textBox.setText(colorName.toUpperCase());
-				
+
 			}
 		});
 		BoxList list = new BoxList(LayoutType.VERTICAL);
@@ -496,115 +454,134 @@ public class Demo {
 		list.add(textKeyboard);
 		return list;
 	}
-	public BoxContainer manyGradientBoxes(){
+
+	public BoxContainer manyGradientBoxes() {
 		BoxContainer ret = new BoxContainer();
-		
-		Box box = new Box(3,3,2,2, new Color(0.3f, 0.4f,0.7f,1.0f));
+
+		Box box = new Box(3, 3, 2, 2, new Color(0.3f, 0.4f, 0.7f, 1.0f));
 		box.setBrightness(1.0f);
 		box.setSaturation(1.0f);
-			BatchCommand batch = new BatchCommand(1);
-			batch.addCommand(new SizeChanger(1, 15.f, 2.0f,8.0f, 2, true, SizeChanger.ChangeType.HEIGHT));
-			batch.addCommand(new SizeChanger(1, 15.f, 2.0f,8.0f, 2, true, SizeChanger.ChangeType.WIDTH));
-			batch.addCommand(new ColorChanger(1, 45.0f, 1.0f, 0.0f, 2, ColorChanger.ColorChangeType.HUE));
-			batch.addCommand(new SizeChanger(1, 15.f, 8.0f,2.0f, 2, true, SizeChanger.ChangeType.HEIGHT));
-			batch.addCommand(new SizeChanger(1, 15.f, 8.0f,2.0f, 2, true, SizeChanger.ChangeType.WIDTH));
-			ProcessCommand proc2 = new ProcessCommand(1);
-			proc2.addCommand(new ColorChanger(1, 15.0f, 0.0f, 1.0f, 2, ColorChanger.ColorChangeType.BRIGHTNESS));
-			batch.addCommand(proc2);
-			box.addCommand(batch);
+		BatchCommand batch = new BatchCommand(1);
+		batch.addCommand(new SizeChanger(1, 15.f, 2.0f, 8.0f, 2, true,
+				SizeChanger.ChangeType.HEIGHT));
+		batch.addCommand(new SizeChanger(1, 15.f, 2.0f, 8.0f, 2, true,
+				SizeChanger.ChangeType.WIDTH));
+		batch.addCommand(new ColorChanger(1, 45.0f, 1.0f, 0.0f, 2,
+				ColorChanger.ColorChangeType.HUE));
+		batch.addCommand(new SizeChanger(1, 15.f, 8.0f, 2.0f, 2, true,
+				SizeChanger.ChangeType.HEIGHT));
+		batch.addCommand(new SizeChanger(1, 15.f, 8.0f, 2.0f, 2, true,
+				SizeChanger.ChangeType.WIDTH));
+		ProcessCommand proc2 = new ProcessCommand(1);
+		proc2.addCommand(new ColorChanger(1, 15.0f, 0.0f, 1.0f, 2,
+				ColorChanger.ColorChangeType.BRIGHTNESS));
+		batch.addCommand(proc2);
+		box.addCommand(batch);
 		ret.add(box);
 		return ret;
 	}
-	public BoxContainer colorsDemo(){
+
+	public BoxContainer colorsDemo() {
 		final BoxContainer ret = new BoxContainer();
 		float hue = 0.0f;
-		float inc = 1.0f/64.0f;
-		for(int n=0; n<8; n++){
-			for(int m=0; m<8;m++){
-				ret.add(new Box(n,m,1,1, new Color(hue, 1.0f, 1.0f, Color.Mode.HSB)));
-				hue+=inc;
+		float inc = 1.0f / 64.0f;
+		for (int n = 0; n < 8; n++) {
+			for (int m = 0; m < 8; m++) {
+				ret.add(new Box(n, m, 1, 1, new Color(hue, 1.0f, 1.0f,
+						Color.Mode.HSB)));
+				hue += inc;
 			}
 		}
 		ret.setBoxEventListener(new BoxEventAdapter() {
-			
+			float inc = 1.0f / 64.0f;
+
 			@Override
 			public boolean onRelease(int x, int y) {
-				reloadBoxes(x,y);
+				reloadBoxes(3,3);
 				return true;
 			}
 
 			private void reloadBoxes(int x, int y) {
-				Box selected = ret.boxAtPos(new Point(x,y));
+				Box selected = ret.boxAtPos(new Point(x, y));
 				float hue = selected.getColor().getHue();
-				float inc = 1.0f/128.0f;
-				hue -= ((y*8+x)/2 * inc);
-				for(int n=0; n<8; n++){
-					for(int m=0; m<8;m++){
-						Box next = ret.boxAtPos(new Point(n,m));
+				hue -= ((8 * y + x) * inc);
+				for (int n = 0; n < 8; n++) {
+					for (int m = 0; m < 8; m++) {
+						Box next = ret.boxAtPos(new Point(n, m));
 						next.setHue(hue);
-						hue+=inc;
+						hue += inc;
 					}
 				}
 			}
 
 			@Override
 			public boolean onDrag(int x, int y, int newX, int newY) {
-				if(newX != x){
-					if(newX > x){
-						incBrightness();
-					}else{
-						decBrightness();
+				if (newX != x) {
+					if (newX > x) {
+						// incBrightness();
+						inc -= 0.001f;
+						if (inc <= 1.0f / 360.0f)
+							inc = 1.0f / 360.0f;
+					} else {
+						inc += 0.001f;
+						if (inc >= 1.0f / 64.0f)
+							inc = 1.0f / 64.0f;
+						// decBrightness();
 					}
-				}else if(newY != y){
-					if(newY > y){
+				} else if (newY != y) {
+					if (newY > y) {
 						incSaturation();
-					}else{
+					} else {
 						decSaturation();
 					}
 				}
+				reloadBoxes(3,3);
 				return true;
 			}
 
 			private void incSaturation() {
-				for(int n=0; n<8; n++){
-					for(int m=0; m<8;m++){
-						Box b = ret.boxAtPos(new Point(n,m));
+				for (int n = 0; n < 8; n++) {
+					for (int m = 0; m < 8; m++) {
+						Box b = ret.boxAtPos(new Point(n, m));
 						float s = b.getColor().getSaturation();
-						if(s < 1.0f){
-							b.getColor().setSaturation(s+0.1f);
+						if (s < 1.0f) {
+							b.getColor().setSaturation(s + 0.1f);
 						}
 					}
 				}
 			}
+
 			private void decSaturation() {
-				for(int n=0; n<8; n++){
-					for(int m=0; m<8;m++){
-						Box b = ret.boxAtPos(new Point(n,m));
+				for (int n = 0; n < 8; n++) {
+					for (int m = 0; m < 8; m++) {
+						Box b = ret.boxAtPos(new Point(n, m));
 						float s = b.getColor().getSaturation();
-						if(s >= 0.1f){
-							b.getColor().setSaturation(s-0.1f);
+						if (s >= 0.1f) {
+							b.getColor().setSaturation(s - 0.1f);
 						}
 					}
 				}
 			}
+
 			private void incBrightness() {
-				for(int n=0; n<8; n++){
-					for(int m=0; m<8;m++){
-						Box b = ret.boxAtPos(new Point(n,m));
+				for (int n = 0; n < 8; n++) {
+					for (int m = 0; m < 8; m++) {
+						Box b = ret.boxAtPos(new Point(n, m));
 						float s = b.getColor().getBrightness();
-						if(s < 1.0f){
-							b.getColor().setBrightness(s+0.1f);
+						if (s < 1.0f) {
+							b.getColor().setBrightness(s + 0.1f);
 						}
 					}
-				}				
+				}
 			}
+
 			private void decBrightness() {
-				for(int n=0; n<8; n++){
-					for(int m=0; m<8;m++){
-						Box b = ret.boxAtPos(new Point(n,m));
+				for (int n = 0; n < 8; n++) {
+					for (int m = 0; m < 8; m++) {
+						Box b = ret.boxAtPos(new Point(n, m));
 						float s = b.getColor().getBrightness();
-						if(s >= 0.1f){
-							b.getColor().setBrightness(s-0.1f);
+						if (s >= 0.1f) {
+							b.getColor().setBrightness(s - 0.1f);
 						}
 					}
 				}

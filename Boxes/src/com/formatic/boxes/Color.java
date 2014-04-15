@@ -156,7 +156,7 @@ public class Color extends com.badlogic.gdx.graphics.Color{
 		if (b < cmin)
 			cmin = b;
 
-		brightness = ((float) cmax) /100.0f;
+		brightness = ((float) cmax);// /100.0f;
 		if (cmax != 0)
 			saturation = ((float) (cmax - cmin)) / ((float) cmax);
 		else

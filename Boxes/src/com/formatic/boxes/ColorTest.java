@@ -58,5 +58,10 @@ public class ColorTest {
 		}
 		
 	}
-
+	@Test
+	public void test3() {
+		Color a = new Color(1,0,0,0);
+		Color b = new Color(a);
+		assertTrue(b.getBrightness()==1.0f);
+	}
 }
