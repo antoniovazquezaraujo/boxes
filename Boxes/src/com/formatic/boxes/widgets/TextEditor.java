@@ -25,8 +25,10 @@ package com.formatic.boxes.widgets;
 import com.formatic.boxes.Color;
 import com.formatic.boxes.Font;
 import com.formatic.boxes.ScreenModel;
+import com.formatic.boxes.widgets.events.CharSelectorListener;
+import com.formatic.boxes.widgets.events.NumberKeyboardListener;
 
-public class TextBox extends BoxList {
+public class TextEditor extends BoxList implements CharSelectorListener, NumberKeyboardListener {
 	final static int MAX_TURNS = 10;
 	String text;
 	Font font;
@@ -34,11 +36,11 @@ public class TextBox extends BoxList {
 	private int numTurns = 0;
 	private Color fontColor;
 
-	TextBox(Font font) {
+	TextEditor(Font font) {
 		this(font, "");
 	}
 
-	public TextBox(int fontType, String text) {
+	public TextEditor(int fontType, String text) {
 		this(new Font(fontType), text);
 	}
 
@@ -49,7 +51,7 @@ public class TextBox extends BoxList {
 		}		
 	}
 
-	TextBox(Font font, String text) {
+	TextEditor(Font font, String text) {
 		super(LayoutType.HORIZONTAL);
 		this.font = font;
 		this.fontColor = new Color(1, 0, 0, 1);
@@ -103,15 +105,18 @@ public class TextBox extends BoxList {
 	@Override
 	public void update(ScreenModel screenModel) {
 		super.update(screenModel);
-		numTurns++;
-		if (numTurns >= MAX_TURNS) {
-			numTurns = 0;
-			decX();
-			if (getPosition().x < -1 * (font.getWidth() * text.length())) {
-				// setX(getSize().width);
-				setX(8);
-			}
-		}
+		int len = font.getWidth()*text.length();
+		int boxWidth = container.getSize().width;
+		setX((len *-1) +(boxWidth));
+	}
 
+	@Override
+	public void charSelected(char c) {
+		addText(""+c);
+	}
+
+	@Override
+	public void numberSelected(int n) {
+		addText(""+(char)('0'+n));
 	}
 }

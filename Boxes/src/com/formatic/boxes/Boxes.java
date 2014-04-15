@@ -26,7 +26,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector;
 import com.formatic.boxes.widgets.Selector;
 
-public class MyScreen implements ApplicationListener {
+public class Boxes implements ApplicationListener {
 	ScreenModel screenModel;
 	ScreenRenderer screenRenderer;
 	ScreenController screenController;
@@ -61,7 +61,7 @@ public class MyScreen implements ApplicationListener {
 
 	@Override
 	public void render() {
-		screenModel.clear();
+		//screenModel.clear();
 		topBox.update(screenModel);
 		screenRenderer.render();
 	}

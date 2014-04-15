@@ -29,23 +29,6 @@ import com.formatic.boxes.widgets.events.BoxEventListener;
 import com.formatic.boxes.widgets.events.ButtonListener;
 import com.formatic.boxes.widgets.events.TextKeyboardListener;
 
-class KeyboardKey extends Button {
-	char c;
-	static Color generalPressedColor = new Color(0, 0, 0, 1);
-	String name;
-	public KeyboardKey(int x, int y, char c) {
-		super(x, y, 1, 1, new Color(KeyboardColors.getColor(c)), generalPressedColor);
-		name = KeyboardColors.getName(c);
-		this.c=c;
-		setButtonListener(new ButtonListener() {
-			@Override
-			public boolean onClick(Button b) {
-				//System.out.println(KeyboardKey.this.c);
-				return false;
-			}
-		});
-	}
-}
 class KeyboardColors{
 	static float alpha=1.0f;
 	static Map<Character, String>names;
@@ -103,7 +86,7 @@ class KeyboardColors{
 		addColor("Gold",	new Color(1.00f, 0.84f, 0.02f, alpha));;
 		addColor("GoldenRod",	new Color(0.85f, 0.65f, 0.00f, alpha));;
 		addColor("Gray",	new Color(0.50f, 0.50f, 0.50f, alpha));;
-		addColor("Green",	new Color(0.00f, 0.03f, 0.03f, alpha));;
+		addColor("Green",	new Color(0.00f, 1.00f, 0.40f, alpha));;
 		addColor("GreenYellow",	new Color(0.68f, 1.00f, 0.00f, alpha));;
 		addColor("HoneyDew",	new Color(0.94f, 1.00f, 0.94f, alpha));;
 		addColor("HotPink",	new Color(1.00f, 0.41f, 0.71f, alpha));;

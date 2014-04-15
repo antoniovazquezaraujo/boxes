@@ -28,6 +28,8 @@ import com.formatic.boxes.commands.PositionChanger;
 import com.formatic.boxes.commands.ProcessCommand;
 import com.formatic.boxes.commands.SizeChanger;
 import com.formatic.boxes.games.Cheso;
+import com.formatic.boxes.widgets.BlockSelector;
+import com.formatic.boxes.widgets.BlocksTextKeyboard;
 import com.formatic.boxes.widgets.Box;
 import com.formatic.boxes.widgets.BoxContainer;
 import com.formatic.boxes.widgets.BoxList;
@@ -80,6 +82,7 @@ public class Demo {
 		topBox.add(demoTextKeyboard());
 		topBox.add(manyGradientBoxes());
 		topBox.add(colorsDemo());
+		topBox.add(blockTextKeyboardDemo());
 	}
 
 	BoxList demo1() {
@@ -589,4 +592,10 @@ public class Demo {
 		});
 		return ret;
 	}
+	public BoxContainer blockTextKeyboardDemo() {
+		final BoxContainer ret = new BoxContainer();
+		ret.add(new BlocksTextKeyboard());
+		return ret;
+	}
+
 }

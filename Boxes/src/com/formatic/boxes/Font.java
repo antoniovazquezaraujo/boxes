@@ -1496,12 +1496,12 @@ public class Font {
 			{0,1,1}
 		} 
 	};
-	final static int TYPE_24=0;
-	final static int TYPE_33=1;
-	final static int TYPE_35=2;
-	final static int TYPE_45=3;
-	final static int TYPE_55=4;
-	final static int TYPE_57=5;
+	final public static int TYPE_24=0;
+	final public static int TYPE_33=1;
+	final public static int TYPE_35=2;
+	final public static int TYPE_45=3;
+	final public static int TYPE_55=4;
+	final public static int TYPE_57=5;
 	int type;
 	int[][][] map;
 

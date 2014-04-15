@@ -38,6 +38,7 @@ public class CharBox extends Box {
 		setFont(font);
 		setChar(c);
 		this.fontColor = fontColor;
+		setColor(new Color(1,1,1,1.0f));
 	}
 
 	public CharBox(Font font, char c) {

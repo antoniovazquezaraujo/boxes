@@ -69,7 +69,7 @@ j  org.lwjgl.openal.AL.create()V+6
 j  com.badlogic.gdx.backends.openal.OpenALAudio.<init>(III)V+121
 j  com.badlogic.gdx.backends.lwjgl.LwjglApplication.<init>(Lcom/badlogic/gdx/ApplicationListener;Lcom/badlogic/gdx/backends/lwjgl/LwjglApplicationConfiguration;Lcom/badlogic/gdx/backends/lwjgl/LwjglGraphics;)V+107
 j  com.badlogic.gdx.backends.lwjgl.LwjglApplication.<init>(Lcom/badlogic/gdx/ApplicationListener;Lcom/badlogic/gdx/backends/lwjgl/LwjglApplicationConfiguration;)V+11
-j  com.formatic.myScreen.Main.main([Ljava/lang/String;)V+39
+j  com.formatic.boxes.Main.main([Ljava/lang/String;)V+39
 v  ~StubRoutines::call_stub
 
 ---------------  P R O C E S S  ---------------
@@ -403,7 +403,7 @@ bfa31000-bfa52000 rw-p 00000000 00:00 0          [stack]
 
 VM Arguments:
 jvm_args: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:40208 -Dfile.encoding=UTF-8 
-java_command: com.formatic.myScreen.Main
+java_command: com.formatic.boxes.Main
 Launcher Type: SUN_STANDARD
 
 Environment Variables:

@@ -64,12 +64,13 @@ public class Box implements BoxEventListener, BoxDisplayListener {
 	public Box(int x, int y, int width, int height, Color color) {
 		this.position = new Point(x, y);
 		this.size = new Dimension(width, height);
-		this.color = new Color(1,1,1,1);
 		this.colorGradient = null;
 		batch = new BatchCommand();
 		batch.setBox(this);
-		if (color != null) {
+		if(color!= null){
 			setColor(color);
+		}else{
+			setColor(new Color(1,1,1,1));
 		}
 	}
 
@@ -90,8 +91,10 @@ public class Box implements BoxEventListener, BoxDisplayListener {
 	}
 
 	public void setColor(Color color) {
-		//this.color.set(color);
 		this.color = color;
+	}
+	public void setColor(float r, float g, float b){
+		this.color.set(r,g,b, this.color.a);
 	}
 	public void setColor(float r, float g, float b, float a){
 		this.color.set(r,g,b,a);
@@ -117,7 +120,7 @@ public class Box implements BoxEventListener, BoxDisplayListener {
 			screenModel.fill(	0, 0, getSize().width, getSize().height,
 								colorGradient);
 		} else {
-			screenModel.setColor(getColor());
+			screenModel.setColor(color);
 			screenModel.fill(0, 0, getSize().width, getSize().height);
 		}
 		if (boxDisplayListener != null) {

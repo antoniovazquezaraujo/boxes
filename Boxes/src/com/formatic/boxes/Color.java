@@ -103,11 +103,11 @@ public class Color extends com.badlogic.gdx.graphics.Color{
 		this.brightness=brightness;
 	}
 	private void setRGB(float r, float g, float b) {
-		setRGB(r,g,b,1.0f);
+		setRGB(r,g,b,this.a);
 	}
 	private void setRGB(float r, float g, float b, float a) {
 		this.mode=Mode.RGB;
-		super.set(r, g, b, a);
+		super.set(r, g, b,a);
 	}
 
 	public void updateFromHSBToRGB() {

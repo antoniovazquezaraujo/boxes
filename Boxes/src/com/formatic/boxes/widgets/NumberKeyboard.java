@@ -63,9 +63,9 @@ public class NumberKeyboard extends BoxContainer {
 				firstY=y;
 				selected = getOnePointNumber(x,y);
 				activateSwitches();
-				if(numberKeyboardListener != null){
-					numberKeyboardListener.numberSelected(selected);
-				}
+//				if(numberKeyboardListener != null){
+//					numberKeyboardListener.numberSelected(selected);
+//				}
 				return true; 
 			}
 			
