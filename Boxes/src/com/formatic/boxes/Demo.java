@@ -28,7 +28,9 @@ import com.formatic.boxes.commands.PositionChanger;
 import com.formatic.boxes.commands.ProcessCommand;
 import com.formatic.boxes.commands.SizeChanger;
 import com.formatic.boxes.games.Cheso;
-import com.formatic.boxes.widgets.BlockSelector;
+import com.formatic.boxes.gradients.ColorGradient;
+import com.formatic.boxes.gradients.LinearGradient;
+import com.formatic.boxes.gradients.RadialGradient;
 import com.formatic.boxes.widgets.BlocksTextKeyboard;
 import com.formatic.boxes.widgets.Box;
 import com.formatic.boxes.widgets.BoxContainer;
@@ -36,6 +38,7 @@ import com.formatic.boxes.widgets.BoxList;
 import com.formatic.boxes.widgets.BoxList.LayoutType;
 import com.formatic.boxes.widgets.Button;
 import com.formatic.boxes.widgets.CharBox;
+import com.formatic.boxes.widgets.ColorChooser;
 import com.formatic.boxes.widgets.NumberKeyboard;
 import com.formatic.boxes.widgets.Rotator;
 import com.formatic.boxes.widgets.Selector;
@@ -83,6 +86,8 @@ public class Demo {
 		topBox.add(manyGradientBoxes());
 		topBox.add(colorsDemo());
 		topBox.add(blockTextKeyboardDemo());
+		topBox.add(colorChooserDemo());
+
 	}
 
 	BoxList demo1() {
@@ -153,22 +158,22 @@ public class Demo {
 
 	BoxContainer testRadialGradient() {
 		BoxContainer p = new BoxContainer();
+		p.setColor(green);
 		radialGradient = new RadialGradient(new Point(3, 3), new Point(7, 7),
-				new Color(0.4f, 0.1f, 0.8f, 1.0f), new Color(0.0f, 0.0f, 0.0f,
-						1.0f), false);
+				0.0f, 1.0f, ColorGradient.Target.BRIGHTNESS, ColorGradient.Repeatable.NONE);
 		p.setColorGradient(radialGradient);
 		p.setBoxEventListener(new BoxEventAdapter() {
 			@Override
 			public boolean onRelease(int x, int y) {
-				radialGradient.from.x = x;
-				radialGradient.from.y = y;
+				radialGradient.setStartPoint(new Point(x,y));
+				radialGradient.setEndPoint(new Point(x+8,y));
 				return false;
 			}
 
 			@Override
 			public boolean onDrag(int x, int y, int newX, int newY) {
-				radialGradient.from.x = newX;
-				radialGradient.from.y = newY;
+				radialGradient.setStartPoint(new Point(newX, newY));
+				radialGradient.setEndPoint(new Point(newX+8,newY));
 				return false;
 			}
 
@@ -181,24 +186,20 @@ public class Demo {
 	BoxContainer testLinearGradient() {
 		BoxContainer p = new BoxContainer();
 		linearGradient = new LinearGradient(new Point(3, 3), new Point(7, 7),
-				new Color(0.0f, 1.0f, 0.0f, 1.0f), new Color(0.0f, 0.0f, 0.0f,
-						1.0f), false);
+				0.1f, 0.4f, ColorGradient.Target.HUE, ColorGradient.Repeatable.NONE);
 		p.setColorGradient(linearGradient);
 		p.setBoxEventListener(new BoxEventAdapter() {
 
 			@Override
 			public boolean onRelease(int x, int y) {
-				linearGradient.from.x = x;
-				linearGradient.to.x = x + 8;
-				linearGradient.from.y = y;
-				linearGradient.to.y = y + 8;
+				linearGradient.setStartPoint(new Point(x,y));
+				linearGradient.setEndPoint(new Point(x+8,y+8));
 				return false;
 			}
 
 			@Override
 			public boolean onDrag(int x, int y, int newX, int newY) {
-				linearGradient.from.x = newX;
-				linearGradient.from.y = newY;
+				linearGradient.setStartPoint(new Point(newX, newY));
 				return false;
 			}
 
@@ -260,10 +261,10 @@ public class Demo {
 						(float) (Math.random()));
 				if (Math.random() > 0.5) {
 					box.setColorGradient(new RadialGradient(Point.random(),
-							Point.random(), fromColor, toColor, false));
+							Point.random(), (float)(Math.random()), (float)(Math.random()), ColorGradient.Target.HUE, ColorGradient.Repeatable.NONE));
 				} else {
 					box.setColorGradient(new LinearGradient(Point.random(),
-							Point.random(), fromColor, toColor, false));
+							Point.random(), (float)(Math.random()), (float)(Math.random()), ColorGradient.Target.HUE, ColorGradient.Repeatable.NONE));
 				}
 
 				int max = (int) (Math.random() * 50);
@@ -521,7 +522,7 @@ public class Demo {
 			public boolean onDrag(int x, int y, int newX, int newY) {
 				if (newX != x) {
 					if (newX > x) {
-						// incBrightness();
+						 incBrightness();
 						inc -= 0.001f;
 						if (inc <= 1.0f / 360.0f)
 							inc = 1.0f / 360.0f;
@@ -529,7 +530,7 @@ public class Demo {
 						inc += 0.001f;
 						if (inc >= 1.0f / 64.0f)
 							inc = 1.0f / 64.0f;
-						// decBrightness();
+						 decBrightness();
 					}
 				} else if (newY != y) {
 					if (newY > y) {
@@ -597,5 +598,9 @@ public class Demo {
 		ret.add(new BlocksTextKeyboard());
 		return ret;
 	}
-
+	public BoxContainer colorChooserDemo() {
+		final BoxContainer ret = new BoxContainer();
+		ret.add(new ColorChooser());
+		return ret;
+	}
 }

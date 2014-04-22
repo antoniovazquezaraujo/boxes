@@ -1,10 +1,13 @@
-package com.formatic.boxes;
+package test;
 
 import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.formatic.boxes.Color;
+import com.formatic.boxes.Color.Mode;
 
 public class ColorTest {
 	Color color;
@@ -60,8 +63,14 @@ public class ColorTest {
 	}
 	@Test
 	public void test3() {
-		Color a = new Color(1,0,0,0);
+		Color a = new Color(1,1,1,1);
+		a.setBrightness(1.0f);
+		a.setSaturation(1.0f);
 		Color b = new Color(a);
+		assertTrue(a.getBrightness()==1.0f);
+		assertTrue(a.getSaturation()==1.0f);
+		a.setHue(0.5f);
 		assertTrue(b.getBrightness()==1.0f);
+		assertTrue(b.getSaturation()==1.0f);
 	}
 }

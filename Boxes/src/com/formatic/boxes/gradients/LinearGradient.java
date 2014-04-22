@@ -19,32 +19,40 @@
     You should have received a copy of the GNU General Public License
     along with Boxes.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.formatic.boxes;
+package com.formatic.boxes.gradients;
+
+import com.badlogic.gdx.math.Interpolation;
+import com.formatic.boxes.Point;
+import com.formatic.boxes.gradients.ColorGradient.Repeatable;
+import com.formatic.boxes.gradients.ColorGradient.Target;
 
 
 
 
 public class LinearGradient extends ColorGradient {
-	LinearGradient(Point from, Point to, Color fromColor, Color toColor,
-					boolean repeats) {
-		super(from, to, fromColor, toColor, repeats);
-		totalDistance = dist(from.x, from.y, to.x, to.y);
+
+	public LinearGradient(Point startPoint, Point endPoint, float minValue,
+			float maxValue) {
+		this(startPoint, endPoint, minValue, maxValue, Target.BRIGHTNESS,
+				Repeatable.NONE);
 	}
 
-	public float dist(float x1, float y1, float x2, float y2) {
-		float dx = x1 - x2;
-		float dy = y1 - y2;
-		return (float) Math.sqrt(dx * dx + dy * dy);
+	public LinearGradient(Point startPoint, Point endPoint, float minValue,
+			float maxValue, Target target, Repeatable repeatable) {
+		super(startPoint, endPoint, minValue, maxValue, target, repeatable);
+		update();
 	}
-
-	Color getColor(Point location) {
-		// float distance = dist(location.x, location.y, startPoint.x, startPoint.y);
-		// Cómo calculo la distancia a la perpendicular???
-		float distance = distToLine(from, to, location);
-		float d = Math.abs((float) (distance / totalDistance));
-		Color tmp= new Color(fromColor);
-		tmp.lerp(toColor.r, toColor.g, toColor.b, toColor.a, d);
-		return tmp;
+	@Override
+	protected void update(){
+		float totalDistance = (float) startPoint.distance(endPoint);
+		for (int col = 0; col < 8; col++) {
+			for (int row = 0; row < 8; row++) {
+				float distance = distToLine(startPoint, endPoint, new Point(col, row));
+				float d = Math.abs(distance / totalDistance);
+				data[col][row] = Interpolation.linear.apply(minValue, maxValue,
+						d);
+			}
+		}		
 	}
 
 	float distToLine(Point p1, Point p2, Point p) {
@@ -58,8 +66,5 @@ public class LinearGradient extends ColorGradient {
 								+ Math.pow(p2.y - p1.y, 2));
 		double d = ch / del;
 		return (float) d;
-
-		
-		
 	}
 }

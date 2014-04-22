@@ -32,14 +32,16 @@ public class BoxContainer extends Box {
 	Point at;
 
 	public BoxContainer() {
-		this(8, 8);
+		this(8,8);
 	}
 
 	public BoxContainer(int width, int height) {
-		super(width, height);
+		this(0,0,width, height);
+	}
+	public BoxContainer(int x, int y, int width, int height) {
+		super(x,y, width, height);
 		boxes = new Vector<Box>();
 		at = new Point(0, 0);
-
 	}
 
 	public void add(Box box) {

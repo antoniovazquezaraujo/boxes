@@ -18,25 +18,23 @@
 
     You should have received a copy of the GNU General Public License
     along with Boxes.  If not, see <http://www.gnu.org/licenses/>.
-*/
-package com.formatic.boxes;
+ */
+package com.formatic.boxes.widgets;
 
-import com.badlogic.gdx.math.Interpolation;
+import com.formatic.boxes.Color;
+import com.formatic.boxes.Point;
+import com.formatic.boxes.widgets.events.BoxEventAdapter;
 
-public class RadialGradient extends ColorGradient {
-	RadialGradient(Point from, Point to, Color fromColor, Color toColor,
-			boolean repeats) {
-		super(from, to, fromColor, toColor, repeats);
-		//totalDistance = dist(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-		totalDistance = from.distance(to);
+interface ScrollerListener {
+	public void valueChanged(int change);
+}
+public class Scroller extends BoxContainer {
+	public Scroller() {
+		this(new Color(1, 0, 1, 1));
 	}
 
-	Color getColor(Point location) {
-		double distance = location.distance(from);
-		float d =(float)( distance / totalDistance);
-		float r = Interpolation.linear.apply(fromColor.r, toColor.r, d);
-		float g = Interpolation.linear.apply(fromColor.g, toColor.g, d);
-		float b = Interpolation.linear.apply(fromColor.b, toColor.b, d);
-		return new Color(r, g, b,1);
+	public Scroller(Color color) {
+	
 	}
+
 }

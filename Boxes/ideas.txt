@@ -1,0 +1,24 @@
+Boxes.
+15 de Abril de 2014.
+
+Ideas sobre el desarrollo.
+
+Teclados MAXIMA PRIORIDAD!
+	Agregar el último teclado con selector de bloques
+Tipos de letra
+	Agregar tipos de espaciado variable, y completos
+Selectores anidados
+	Hacer que una aplicación tenga varios niveles
+Mejorar aspecto del selector
+	Quizá agregar degradado a los botones del selector para resaltarlo más aún
+Sonido
+	Agregar sonido
+Scrollers
+	Agregar panel desplazable con varios componentes
+ColorChooser
+	Terminar el colorChooser nuevo
+Painter
+	Agregar panel para dibujar con colorChooser
+Games
+	Agregar juegos cuanto antes
+

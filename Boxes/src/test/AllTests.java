@@ -1,3 +1,4 @@
+package test;
 /*
 	                          BOXES
 	              A minimalist color box framework
@@ -24,7 +25,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ com.formatic.boxes.ScreenTest.class })
+@SuiteClasses({ test.ScreenTest.class, test.ColorTest.class })
 public class AllTests {
 
 }

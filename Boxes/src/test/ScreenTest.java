@@ -19,7 +19,7 @@
     You should have received a copy of the GNU General Public License
     along with Boxes.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.formatic.boxes;
+package test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -28,18 +28,29 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.formatic.boxes.Color;
+import com.formatic.boxes.Dimension;
+import com.formatic.boxes.Font;
+import com.formatic.boxes.Point;
+import com.formatic.boxes.ScreenModel;
 import com.formatic.boxes.widgets.Box;
+import com.formatic.boxes.widgets.BoxContainer;
 import com.formatic.boxes.widgets.BoxList;
+import com.formatic.boxes.widgets.CharBox;
 import com.formatic.boxes.widgets.BoxList.LayoutType;
+import com.formatic.boxes.widgets.events.NumberKeyboardListener;
+import com.formatic.boxes.widgets.NumberKeyboard;
 import com.formatic.boxes.widgets.TextBox;
-
+class MyScreenModel extends ScreenModel{
+	
+}
 public class ScreenTest {
 
-	ScreenModel screen;
+	MyScreenModel screen;
 
 	@Before
 	public void setup() {
-		screen = new ScreenModel();
+		screen = new MyScreenModel();
 	}
 
 	@After
@@ -377,5 +388,40 @@ public class ScreenTest {
 		assertTrue(l2.getSize().equals(new Dimension(8, 8)));
 
 	}
-
+	@Test
+	public void testBoxListBoxAtPos(){
+		final CharBox keyboardCharUnidades = new CharBox(
+				new Font(Font.TYPE_24), '0', new Color(0.6f, 0.0f, 0, 1));
+		final CharBox keyboardCharDecenas = new CharBox(new Font(Font.TYPE_24),
+				'0', new Color(0.6f, 0.0f, 0, 1));
+		NumberKeyboard numberKeyboardUnidades = new NumberKeyboard();
+		numberKeyboardUnidades
+				.setNumberKeyboardListener(new NumberKeyboardListener() {
+					public void numberSelected(int number) {
+						keyboardCharUnidades.setNumber(number);
+					}
+				});
+		NumberKeyboard numberKeyboardDecenas = new NumberKeyboard();
+		numberKeyboardDecenas
+				.setNumberKeyboardListener(new NumberKeyboardListener() {
+					public void numberSelected(int number) {
+						keyboardCharDecenas.setNumber(number);
+					}
+				});
+		BoxList list = new BoxList(LayoutType.VERTICAL);
+		BoxList chars = new BoxList(LayoutType.HORIZONTAL);
+		chars.add(keyboardCharDecenas);
+		chars.add(keyboardCharUnidades);
+		list.add(chars);
+		BoxList keyboards = new BoxList(LayoutType.HORIZONTAL);
+		keyboards.add(numberKeyboardDecenas);
+		keyboards.add(numberKeyboardUnidades);
+		list.add(keyboards);
+		assertTrue(list.boxAtPos(new Point(0,0)) == chars);
+		assertTrue(chars.boxAtPos(new Point(0,0)) == keyboardCharDecenas);
+		assertTrue(chars.boxAtPos(new Point(2,0)) == keyboardCharUnidades);
+		assertTrue(keyboards.boxAtPos(new Point(0,0)) == numberKeyboardDecenas);
+		assertTrue(keyboards.boxAtPos(new Point(2,0)) == numberKeyboardUnidades);
+		
+	}
 }

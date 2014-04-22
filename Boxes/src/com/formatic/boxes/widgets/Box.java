@@ -22,12 +22,12 @@
 package com.formatic.boxes.widgets;
 
 import com.formatic.boxes.Color;
-import com.formatic.boxes.ColorGradient;
 import com.formatic.boxes.Dimension;
 import com.formatic.boxes.Point;
 import com.formatic.boxes.ScreenModel;
 import com.formatic.boxes.commands.BatchCommand;
 import com.formatic.boxes.commands.Command;
+import com.formatic.boxes.gradients.ColorGradient;
 import com.formatic.boxes.widgets.events.BoxDisplayListener;
 import com.formatic.boxes.widgets.events.BoxEventListener;
 
@@ -60,7 +60,9 @@ public class Box implements BoxEventListener, BoxDisplayListener {
 	public Box(int width, int height, Color color) {
 		this(0, 0, width, height, color);
 	}
-
+	public Box(int x, int y, int width, int height) {
+		this(x,y, width, height, null);
+	}
 	public Box(int x, int y, int width, int height, Color color) {
 		this.position = new Point(x, y);
 		this.size = new Dimension(width, height);

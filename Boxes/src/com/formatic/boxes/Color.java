@@ -1,3 +1,24 @@
+/*
+	                          BOXES
+	              A minimalist color box framework
+	         Copyright (C) 2014 Antonio Vazquez Araujo
+	          (antoniovazquezaraujo[at]gmail[dot]com)
+	          
+	This file is part of Boxes.
+
+    Boxes is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Boxes is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Boxes.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.formatic.boxes;
 
 public class Color extends com.badlogic.gdx.graphics.Color{
@@ -38,6 +59,7 @@ public class Color extends com.badlogic.gdx.graphics.Color{
 
 	public Color(float d1, float d2, float d3, Mode mode){
 		this.mode=mode;
+		this.a=1.0f;
 		set(d1,d2,d3);
 	}
 	public Color(Mode mode){
@@ -144,7 +166,7 @@ public class Color extends com.badlogic.gdx.graphics.Color{
 			break;
 		default:
 			throw new RuntimeException(
-					"Something went wrong when converting from HSV to RGB. Input was "
+					"Something went wrong when converting startPoint HSV endPoint RGB. Input was "
 							+ hue + ", " + saturation + ", " + brightness);
 		}
 	}

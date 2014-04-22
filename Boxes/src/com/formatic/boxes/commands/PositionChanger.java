@@ -50,10 +50,10 @@ public class PositionChanger extends RangeCommand {
 				box.setY((int) actualValue);
 				break;
 			case GRADIENT_FROM:
-				box.colorGradient.from.setY((int) actualValue);
+				box.colorGradient.startPoint.setY((int) actualValue);
 				break;
 			case GRADIENT_TO:
-				box.colorGradient.to.setY((int) actualValue);
+				box.colorGradient.endPoint.setY((int) actualValue);
 				break;
 			default:
 				break;
@@ -66,10 +66,10 @@ public class PositionChanger extends RangeCommand {
 				box.setX((int) actualValue);
 				break;
 			case GRADIENT_FROM:
-				box.colorGradient.from.setX((int) actualValue);
+				box.colorGradient.startPoint.setX((int) actualValue);
 				break;
 			case GRADIENT_TO:
-				box.colorGradient.to.setX((int) actualValue);
+				box.colorGradient.endPoint.setX((int) actualValue);
 				break;
 			default:
 				break;

@@ -24,6 +24,7 @@ package com.formatic.boxes;
 
 
 import com.badlogic.gdx.math.Rectangle;
+import com.formatic.boxes.gradients.ColorGradient;
 
 public class ScreenModel {
 	final int SIZE = 8;
@@ -77,21 +78,21 @@ public class ScreenModel {
 		}
 	}
 
-	void resetPositionAndSize() {
+	public void resetPositionAndSize() {
 		this.size.setSize(8, 8);
 		this.position.setLocation(0, 0);
 	}
-	void setSize(Dimension size){
+	protected void setSize(Dimension size){
 		this.size.setSize(size);
 	}
-	void setPosition(Point position){
+	public void setPosition(Point position){
 		this.position.setLocation(position);
 	}
 	public void setPointAndSize(Point position, Dimension dimension) {
 		this.size.setSize(dimension);
 		this.position.setLocation(position);
 	}
-	void setRectangle(Rectangle clip) {
+	protected void setRectangle(Rectangle clip) {
 		this.size.setSize((int)clip.width, (int)clip.height);
 		this.position.setLocation((int)clip.x, (int)clip.y);
 	}
@@ -128,7 +129,7 @@ public class ScreenModel {
 	public void fill(int x, int y, int width, int height) {
 		fill(x,y,width, height, this.getColor());
 	}
-	void translate(Point p){
+	public void translate(Point p){
 		p.x+=position.x;
 		p.y+=position.y;
 	}
@@ -180,6 +181,7 @@ public class ScreenModel {
 		}
 	}
 	public void fill(int boxX, int boxY, int boxWidth, int boxHeight, ColorGradient colorGradient) {
+		Color theColor=new Color(color);
 		for(int x = position.x+boxX; x<position.x+boxWidth; x++){
 			for(int y=position.y+boxY; y<position.y+boxHeight; y++){
 				if(
@@ -193,7 +195,7 @@ public class ScreenModel {
 					/*
 					 * Hacer que el gradiente se muestre relativo a la posicion del box!
 					 */
-			        Color theColor = colorGradient.getColor(new Point(x,y));
+			        colorGradient.update(new Point(x,y), theColor);
 					addColor(x,y, theColor);
 				}
 			}

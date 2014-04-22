@@ -49,6 +49,8 @@ public class ScreenController implements GestureListener {
 		if (pointer == 0) {
 			touchX = (int) (x / screenRenderer.boxWidth);
 			touchY = (int) (y / screenRenderer.boxHeight);
+			lastDragX = touchX;
+			lastDragY = touchY;
 			if(topBox.onTouch(touchX, touchY)){
 				return true;
 			}

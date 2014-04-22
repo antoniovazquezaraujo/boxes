@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="com/formatic/myScreen/BoxSelector.java|com/formatic/myScreen/BoxSelectorListener.java|com/formatic/myScreen/CopyOfScreenModel.java|com/formatic/boxes/commands/ChangeCommand.java" kind="src" path="src"/>
+	<classpathentry excluding="com/formatic/myScreen/BoxSelector.java|com/formatic/myScreen/BoxSelectorListener.java|com/formatic/myScreen/CopyOfScreenModel.java|com/formatic/boxes/commands/ChangeCommand.java|com/formatic/boxes/widgets/OldColorChooser.java|com/formatic/boxes/ColorGradient.java|com/formatic/boxes/LinearGradient.java|com/formatic/boxes/RadialGradient.java" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdx.jar" sourcepath="libs/gdx-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
