@@ -40,7 +40,7 @@ public class RadialGradient extends ColorGradient {
 		update();
 	}
 	@Override
-	protected void update(){
+	public void update(){
 		float totalDistance = (float) startPoint.distance(endPoint);
 		for (int col = 0; col < 8; col++) {
 			for (int row = 0; row < 8; row++) {
@@ -51,5 +51,11 @@ public class RadialGradient extends ColorGradient {
 						d);
 			}
 		}		
+	}
+
+	@Override
+	public float getGap() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

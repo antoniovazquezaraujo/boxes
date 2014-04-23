@@ -7,15 +7,15 @@ import com.formatic.boxes.gradients.ColorGradient.Target;
 
 public class SquareGradient extends ColorGradient {
 
-	enum Alignment {
+	public enum Alignment {
 		ROWS_AND_COLS, COLS_AND_ROWS
 	}
 
-	enum ColumnOrder {
+	public enum ColumnOrder {
 		FROM_LEFT, FROM_RIGHT, FROM_CENTER
 	}
 
-	enum RowOrder {
+	public enum RowOrder {
 		FROM_TOP, FROM_BOTTOM, FROM_CENTER
 	}
 
@@ -26,34 +26,88 @@ public class SquareGradient extends ColorGradient {
 	private RowOrder rowOrder;
 
 	private Alignment alignment;
+
 	private float leftValue, rightValue;
 	private float leftGap, rightGap;
+	private int gapDivider;
 
-	SquareGradient(Point startPoint, Point endPoint, float minValue,
+	public SquareGradient(Point startPoint, Point endPoint, float minValue,
 			float maxValue) {
 		this(startPoint, endPoint, minValue, maxValue, Target.BRIGHTNESS,
-				Repeatable.NONE, 0.1f);
+				Repeatable.NONE);
 	}
 
-	SquareGradient(Point startPoint, Point endPoint, float minValue,
-			float maxValue, Target target, Repeatable repeatable, float gap) {
+	public SquareGradient(Point startPoint, Point endPoint, float minValue,
+			float maxValue, Target target, Repeatable repeatable) {
 		super(startPoint, endPoint, minValue, maxValue, target, repeatable);
 		this.width = (endPoint.x - startPoint.x);
 		this.height = (endPoint.y - startPoint.y);
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 		this.startValue = minValue;
-		this.gap = gap;
+		this.gapDivider = 6;
+		this.gap = 1.0f/gapDivider;
+		this.leftGap = gap * -1;
+		this.rightGap = gap;
 		this.columnOrder = ColumnOrder.FROM_LEFT;
 		this.rowOrder = RowOrder.FROM_TOP;
 		this.repeatable = repeatable;
-		this.alignment = Alignment.ROWS_AND_COLS;
+		this.alignment = Alignment.COLS_AND_ROWS;
 		update();
 
 	}
 
+	public void incValue(){
+		incValue(1);
+	}
+	public void incValue(int inc){
+		startValue+=rightGap*inc;
+		update();
+	}
+	public void decValue(){
+		decValue(1);
+	}
+	public void decValue(int dec){
+		startValue+=leftGap*dec;
+		update();
+	}
+	public void incGap(){
+		incGap(1);
+	}
+	public void incGap(int dec){
+		gapDivider-=dec;
+		if(gapDivider <6){
+			gapDivider=6;
+		}
+		gap = 1.0f/gapDivider;
+//		leftGap = gap * -1;
+//		rightGap = gap;
+		update();
+	}
+	public void decGap(){
+		decGap(1);
+	}
+	public void decGap(int inc){
+		gapDivider+=inc;
+		if(gapDivider > 360){
+			gapDivider=360;
+		}
+		gap = 1.0f/gapDivider;
+//		leftGap = gap * -1;
+//		rightGap = gap;
+		update();
+	}
+
 	public void setGap(float gap) {
 		this.gap = gap;
+		update();
+	}
+	public Alignment getAlignment() {
+		return alignment;
+	}
+
+	public void setAlignment(Alignment alignment) {
+		this.alignment = alignment;
 		update();
 	}
 
@@ -63,7 +117,13 @@ public class SquareGradient extends ColorGradient {
 			if (rightValue + rightGap >= maxValue) {
 				rightGap = 0;
 			}
+			if (rightValue + rightGap < minValue) {
+				rightGap = 0;
+			}
 			if (leftValue + leftGap < minValue) {
+				leftGap = 0;
+			}
+			if (leftValue + leftGap >= maxValue) {
 				leftGap = 0;
 			}
 			rightValue += rightGap;
@@ -97,9 +157,9 @@ public class SquareGradient extends ColorGradient {
 			} else if (rightValue + rightGap < minValue) {
 				rightValue = maxValue;
 				rightValue += rightGap;
-			}else{
+			} else {
 				rightValue += rightGap;
-			} 
+			}
 
 			if (leftValue + leftGap < minValue) {
 				leftValue = maxValue;
@@ -115,13 +175,16 @@ public class SquareGradient extends ColorGradient {
 	}
 
 	@Override
-	protected void update() {
+	public void update() {
+		System.out.println(gap);
+		this.width = (endPoint.x - startPoint.x);
+		this.height = (endPoint.y - startPoint.y);
 		int centerCol = width / 2;
 		int centerLine = height / 2;
-		int upLine = (height / 2) - 1;
-		int downLine = (height / 2);
-		int leftCol = (width / 2) - 1;
-		int rightCol = (width / 2);
+		int upLine = centerLine - 1;
+		int downLine = centerLine;
+		int leftCol = centerCol - 1;
+		int rightCol = centerCol;
 		leftGap = gap * -1;
 		rightGap = gap;
 		leftValue = startValue;// + leftGap;
@@ -136,12 +199,12 @@ public class SquareGradient extends ColorGradient {
 					if (width % 2 != 0) {
 						rightCol++;
 						// first: central col of central line
-						data[centerLine][centerCol] = startValue;
+						data[centerCol][centerLine] = startValue;
 						limitValues();
 						// second: rest of cols of central line
 						for (int col = 0; col < width / 2; col++) {
-							data[centerLine][rightCol + col] = rightValue;
-							data[centerLine][leftCol - col] = leftValue;
+							data[rightCol + col][centerLine] = rightValue;
+							data[leftCol - col][centerLine] = leftValue;
 							limitValues();
 						}
 					} else {
@@ -149,8 +212,8 @@ public class SquareGradient extends ColorGradient {
 						// toghether
 						limitValues();
 						for (int col = 0; col < width / 2; col++) {
-							data[centerLine][rightCol + col] = rightValue;
-							data[centerLine][leftCol - col] = leftValue;
+							data[rightCol + col][centerLine] = rightValue;
+							data[leftCol - col][centerLine] = leftValue;
 							limitValues();
 						}
 					}
@@ -158,8 +221,8 @@ public class SquareGradient extends ColorGradient {
 				// rest of lines
 				for (int row = 0; row < height / 2; row++) {
 					for (int col = 0; col < width; col++) {
-						data[upLine - row][(width - 1) - col] = leftValue;
-						data[downLine + row][col] = rightValue;
+						data[(width - 1) - col][upLine - row] = leftValue;
+						data[col][downLine + row] = rightValue;
 						limitValues();
 					}
 				}
@@ -170,7 +233,7 @@ public class SquareGradient extends ColorGradient {
 				case FROM_BOTTOM:
 					for (int row = height - 1; row >= 0; row--) {
 						for (int col = 0; col < width; col++) {
-							data[row][col] = rightValue;
+							data[col][row] = rightValue;
 							limitValues();
 						}
 					}
@@ -181,7 +244,7 @@ public class SquareGradient extends ColorGradient {
 				case FROM_TOP:
 					for (int row = 0; row < height; row++) {
 						for (int col = 0; col < width; col++) {
-							data[row][col] = rightValue;
+							data[col][row] = rightValue;
 							limitValues();
 						}
 					}
@@ -194,7 +257,7 @@ public class SquareGradient extends ColorGradient {
 				case FROM_BOTTOM:
 					for (int row = height - 1; row >= 0; row--) {
 						for (int col = width - 1; col >= 0; col--) {
-							data[row][col] = rightValue;
+							data[col][row] = rightValue;
 							limitValues();
 						}
 					}
@@ -204,7 +267,7 @@ public class SquareGradient extends ColorGradient {
 				case FROM_TOP:
 					for (int row = 0; row < height; row++) {
 						for (int col = width - 1; col >= 0; col--) {
-							data[row][col] = rightValue;
+							data[col][row] = rightValue;
 							limitValues();
 						}
 					}
@@ -222,20 +285,20 @@ public class SquareGradient extends ColorGradient {
 					if (height % 2 != 0) {
 						downLine++;
 						// central line
-						data[centerLine][centerCol] = startValue;
+						data[centerCol][centerLine] = startValue;
 						// rest of lines
 						limitValues();
 						for (int row = 0; row < height / 2; row++) {
-							data[downLine + row][centerCol] = rightValue;
-							data[upLine - row][centerCol] = leftValue;
+							data[centerCol][downLine + row] = rightValue;
+							data[centerCol][upLine - row] = leftValue;
 							limitValues();
 						}
 					} else {
 						// no central line
 						limitValues();
 						for (int row = 0; row < height / 2; row++) {
-							data[downLine + row][centerCol] = rightValue;
-							data[upLine - row][centerCol] = leftValue;
+							data[centerCol][downLine + row] = rightValue;
+							data[centerCol][upLine - row] = leftValue;
 							limitValues();
 						}
 					}
@@ -243,8 +306,8 @@ public class SquareGradient extends ColorGradient {
 				// rest of cols
 				for (int col = 0; col < width / 2; col++) {
 					for (int row = 0; row < height; row++) {
-						data[(height - 1) - row][leftCol - col] = leftValue;
-						data[row][rightCol + col] = rightValue;
+						data[leftCol - col][(height - 1) - row] = leftValue;
+						data[rightCol + col][row] = rightValue;
 						limitValues();
 					}
 				}
@@ -255,7 +318,7 @@ public class SquareGradient extends ColorGradient {
 				case FROM_BOTTOM:
 					for (int col = 0; col < width; col++) {
 						for (int row = height - 1; row >= 0; row--) {
-							data[row][col] = rightValue;
+							data[col][row] = rightValue;
 							limitValues();
 						}
 					}
@@ -265,7 +328,7 @@ public class SquareGradient extends ColorGradient {
 				case FROM_TOP:
 					for (int col = 0; col < width; col++) {
 						for (int row = 0; row < height; row++) {
-							data[row][col] = rightValue;
+							data[col][row] = rightValue;
 							limitValues();
 						}
 					}
@@ -278,7 +341,7 @@ public class SquareGradient extends ColorGradient {
 				case FROM_BOTTOM:
 					for (int col = width - 1; col >= 0; col--) {
 						for (int row = height - 1; row >= 0; row--) {
-							data[row][col] = rightValue;
+							data[col][row] = rightValue;
 							limitValues();
 						}
 					}
@@ -288,7 +351,7 @@ public class SquareGradient extends ColorGradient {
 				case FROM_TOP:
 					for (int col = width - 1; col >= 0; col--) {
 						for (int row = 0; row < height; row++) {
-							data[row][col] = rightValue;
+							data[col][row] = rightValue;
 							limitValues();
 						}
 					}

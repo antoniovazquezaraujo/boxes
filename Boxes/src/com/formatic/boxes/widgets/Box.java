@@ -119,6 +119,7 @@ public class Box implements BoxEventListener, BoxDisplayListener {
 			batch.reset();
 		}
 		if (colorGradient != null) {
+			screenModel.setColor(color);
 			screenModel.fill(	0, 0, getSize().width, getSize().height,
 								colorGradient);
 		} else {

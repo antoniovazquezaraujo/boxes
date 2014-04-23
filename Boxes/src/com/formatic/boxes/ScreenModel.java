@@ -18,10 +18,8 @@
 
     You should have received a copy of the GNU General Public License
     along with Boxes.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package com.formatic.boxes;
-
-
 
 import com.badlogic.gdx.math.Rectangle;
 import com.formatic.boxes.gradients.ColorGradient;
@@ -32,30 +30,30 @@ public class ScreenModel {
 	private Color color;
 	private Dimension size;
 	private Point position;
-	final Color black = new Color(0,0,0,1);
+	final Color black = new Color(0, 0, 0, 1);
 
 	public String toString() {
 		String ret = "";
-		ret+= position.x+","+position.y+"\n";
-		ret+= size.width+","+size.height+"\n";
+		ret += position.x + "," + position.y + "\n";
+		ret += size.width + "," + size.height + "\n";
 		for (int y = 0; y < SIZE; y++) {
 			for (int x = 0; x < SIZE; x++) {
-				int c = (int)(100 * colors[x][y].r +
-				10 * colors[x][y].g +
-				colors[x][y].b);
+				int c = (int) (100 * colors[x][y].r + 10 * colors[x][y].g + colors[x][y].b);
 				if (x == position.x && y == position.y) {
 					ret += "/";
-				} else if (x == (position.x + size.width)-1 && y == position.y) {
+				} else if (x == (position.x + size.width) - 1
+						&& y == position.y) {
 					ret += "\\";
-				} else if (x == position.x && y == (position.y + size.height)-1) {
+				} else if (x == position.x
+						&& y == (position.y + size.height) - 1) {
 					ret += "\\";
-				} else if (x == (position.x + size.width)-1
-							&& y == (position.y + size.height)-1) {
+				} else if (x == (position.x + size.width) - 1
+						&& y == (position.y + size.height) - 1) {
 					ret += "/";
-				}else{
-					if(c!=0){
-						ret += (char)('A'+c);
-					}else{
+				} else {
+					if (c != 0) {
+						ret += (char) ('A' + c);
+					} else {
 						ret += '.';
 					}
 				}
@@ -66,7 +64,7 @@ public class ScreenModel {
 	}
 
 	public ScreenModel() {
-		color = new Color(0,0,0,0);
+		color = new Color(0, 0, 0, 0);
 		size = new Dimension();
 		position = new Point();
 		resetPositionAndSize();
@@ -82,25 +80,30 @@ public class ScreenModel {
 		this.size.setSize(8, 8);
 		this.position.setLocation(0, 0);
 	}
-	protected void setSize(Dimension size){
+
+	protected void setSize(Dimension size) {
 		this.size.setSize(size);
 	}
-	public void setPosition(Point position){
+
+	public void setPosition(Point position) {
 		this.position.setLocation(position);
 	}
+
 	public void setPointAndSize(Point position, Dimension dimension) {
 		this.size.setSize(dimension);
 		this.position.setLocation(position);
 	}
+
 	protected void setRectangle(Rectangle clip) {
-		this.size.setSize((int)clip.width, (int)clip.height);
-		this.position.setLocation((int)clip.x, (int)clip.y);
+		this.size.setSize((int) clip.width, (int) clip.height);
+		this.position.setLocation((int) clip.x, (int) clip.y);
 	}
 
 	public Dimension getSize() {
 		return size;
 	}
-	public Point getPosition(){
+
+	public Point getPosition() {
 		return position;
 	}
 
@@ -115,6 +118,7 @@ public class ScreenModel {
 	public void setColor(Color color) {
 		this.color.set(color);
 	}
+
 	public void substColor(Color color) {
 		this.setColor(color);
 	}
@@ -122,83 +126,106 @@ public class ScreenModel {
 	public void clear() {
 		for (int forX = 0; forX < size.width; forX++) {
 			for (int forY = 0; forY < size.height; forY++) {
-				setColor(position.x+forX,position.y+forY,black);
+				setColor(position.x + forX, position.y + forY, black);
 			}
 		}
 	}
+
 	public void fill(int x, int y, int width, int height) {
-		fill(x,y,width, height, this.getColor());
+		fill(x, y, width, height, this.getColor());
 	}
-	public void translate(Point p){
-		p.x+=position.x;
-		p.y+=position.y;
+
+	public void translate(Point p) {
+		p.x += position.x;
+		p.y += position.y;
 	}
+
 	private void setColor(int i, int j, Color color) {
 		colors[i][j].set(color);
 	}
 
 	private void addColor(int i, int j, Color color) {
-		colors[i][j].r= colors[i][j].r*(1-color.a) +color.r*color.a;
-		colors[i][j].g= colors[i][j].g*(1-color.a) +color.g*color.a;
-		colors[i][j].b= colors[i][j].b*(1-color.a) +color.b*color.a;
- 
+		colors[i][j].r = colors[i][j].r * (1 - color.a) + color.r * color.a;
+		colors[i][j].g = colors[i][j].g * (1 - color.a) + color.g * color.a;
+		colors[i][j].b = colors[i][j].b * (1 - color.a) + color.b * color.a;
+
 	}
+
 	public void applyClip(Point p, Dimension d) {
-		applyClip(p.x,p.y, d.width, d.height);
+		applyClip(p.x, p.y, d.width, d.height);
 	}
+
 	public void applyClip(Rectangle r) {
-		applyClip((int)r.x, (int)r.y, (int)r.width, (int)r.height);
+		applyClip((int) r.x, (int) r.y, (int) r.width, (int) r.height);
 	}
+
 	public void applyClip(int x, int y, int width, int height) {
-		position.x+=x;
-		position.y+=y;
+		position.x += x;
+		position.y += y;
 		size.setSize(width, height);
 	}
-	void clip(Point from, Point to){
-		position.x+=from.x;
-		position.y+=from.y;
-		size.setSize(to.x-from.x, to.y-from.y);
+
+	void clip(Point from, Point to) {
+		position.x += from.x;
+		position.y += from.y;
+		size.setSize(to.x - from.x, to.y - from.y);
 	}
-	void clip(Point from, Dimension d){
-		position.x+=from.x;
-		position.y+=from.y;
+
+	void clip(Point from, Dimension d) {
+		position.x += from.x;
+		position.y += from.y;
 		size.setSize(d);
 	}
-	public void fill(int boxX, int boxY, int boxWidth, int boxHeight, Color color) {
-		for(int x = position.x+boxX; x<position.x+boxWidth; x++){
-			for(int y=position.y+boxY; y<position.y+boxHeight; y++){
-				if(
-						   x>=0 
-						&& x<8 
-						&& y>=0 
-						&& y<8
-						&& x<position.x+size.width
-						&& y<position.y+size.height
-						){
-					addColor(x,y, color);
+
+	public void fill(int boxX, int boxY, int boxWidth, int boxHeight,
+			Color color) {
+		for (int x = position.x + boxX; x < position.x + boxWidth; x++) {
+			for (int y = position.y + boxY; y < position.y + boxHeight; y++) {
+				if (x >= 0 && x < 8 && y >= 0 && y < 8
+						&& x < position.x + size.width
+						&& y < position.y + size.height) {
+					addColor(x, y, color);
 				}
 			}
 		}
 	}
-	public void fill(int boxX, int boxY, int boxWidth, int boxHeight, ColorGradient colorGradient) {
-		Color theColor=new Color(color);
-		for(int x = position.x+boxX; x<position.x+boxWidth; x++){
-			for(int y=position.y+boxY; y<position.y+boxHeight; y++){
-				if(
-						   x>=0 
-						&& x<8 
-						&& y>=0 
-						&& y<8
-						&& x<position.x+size.width
-						&& y<position.y+size.height
-						){
-					/*
-					 * Hacer que el gradiente se muestre relativo a la posicion del box!
-					 */
-			        colorGradient.update(new Point(x,y), theColor);
-					addColor(x,y, theColor);
+
+	public void fill(int boxX, int boxY, int boxWidth, int boxHeight,
+			ColorGradient colorGradient) {
+		for (int x = position.x + boxX; x < position.x + boxWidth; x++) {
+			for (int y = position.y + boxY; y < position.y + boxHeight; y++) {
+				if (x >= 0 && x < 8 && y >= 0 && y < 8
+						&& x < position.x + size.width
+						&& y < position.y + size.height) {
+					Color theColor = new Color(color);
+					colorGradient.update(new Point(x-(position.x+boxX), y-(position.y+boxY)), theColor);
+					addColor(x, y, theColor);
 				}
 			}
 		}
 	}
+
+	// public void fill(int boxX, int boxY, int boxWidth, int boxHeight,
+	// ColorGradient colorGradient) {
+	//
+	// for(int x = position.x+boxX; x<position.x+boxWidth; x++){
+	// for(int y=position.y+boxY; y<position.y+boxHeight; y++){
+	// if(
+	// x>=0
+	// && x<8
+	// && y>=0
+	// && y<8
+	// && x<position.x+size.width
+	// && y<position.y+size.height
+	// ){
+	// /*
+	// * Hacer que el gradiente se muestre relativo a la posicion del box!
+	// */
+	// Color theColor=new Color(color);
+	// colorGradient.update(new Point(x,y), theColor);
+	// addColor(x,y, theColor);
+	// }
+	// }
+	// }
+	// }
 }

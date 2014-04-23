@@ -134,7 +134,11 @@ abstract public class ColorGradient {
 			break;
 		}
 	}
-	abstract protected void update();
+	public float getValueAt(int x, int y){
+		return data[x][y];
+	}
+	public abstract void update();
+	abstract public float getGap();
 	public void setGap(float gap){
 		
 	}

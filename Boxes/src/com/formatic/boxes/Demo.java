@@ -31,6 +31,7 @@ import com.formatic.boxes.games.Cheso;
 import com.formatic.boxes.gradients.ColorGradient;
 import com.formatic.boxes.gradients.LinearGradient;
 import com.formatic.boxes.gradients.RadialGradient;
+import com.formatic.boxes.gradients.SquareGradient;
 import com.formatic.boxes.widgets.BlocksTextKeyboard;
 import com.formatic.boxes.widgets.Box;
 import com.formatic.boxes.widgets.BoxContainer;
@@ -39,6 +40,7 @@ import com.formatic.boxes.widgets.BoxList.LayoutType;
 import com.formatic.boxes.widgets.Button;
 import com.formatic.boxes.widgets.CharBox;
 import com.formatic.boxes.widgets.ColorChooser;
+import com.formatic.boxes.widgets.HueSelector;
 import com.formatic.boxes.widgets.NumberKeyboard;
 import com.formatic.boxes.widgets.Rotator;
 import com.formatic.boxes.widgets.Selector;
@@ -63,31 +65,38 @@ public class Demo {
 
 	void populate(Selector topBox) {
 
-		topBox.add(demo1());
-		topBox.add(demo2());
-		topBox.add(demo3());
-		topBox.add(demo4());
-		topBox.add(demo5());
-		topBox.add(demo6());
-		topBox.add(demo7());
-		topBox.add(demo8());
-		topBox.add(demo9());
+		 topBox.add(demo1());
+		 topBox.add(demo2());
+		 topBox.add(demo3());
+		 topBox.add(demo4());
+		 topBox.add(demo5());
+		 topBox.add(demo6());
+		 topBox.add(demo7());
+		 topBox.add(demo8());
+		 topBox.add(demo9());
+		
+		 topBox.add(movingBoxes());
+		 topBox.add(randomCommands());
+		 topBox.add(new Cheso());
+		 topBox.add(demoDragBoxes());
+		 topBox.add(demoRotator1());
+		 topBox.add(demoRotator2());
+		 topBox.add(demoNumberKeyboard1());
+		 topBox.add(demoNumberKeyboard2());
+		 topBox.add(demoTextKeyboard());
+		 topBox.add(manyGradientBoxes());
+		 topBox.add(colorsDemo());
+		 topBox.add(blockTextKeyboardDemo());
+
 		topBox.add(testRadialGradient());
 		topBox.add(testLinearGradient());
-		topBox.add(movingBoxes());
-		topBox.add(randomCommands());
-		topBox.add(new Cheso());
-		topBox.add(demoDragBoxes());
-		topBox.add(demoRotator1());
-		topBox.add(demoRotator2());
-		topBox.add(demoNumberKeyboard1());
-		topBox.add(demoNumberKeyboard2());
-		topBox.add(demoTextKeyboard());
-		topBox.add(manyGradientBoxes());
-		topBox.add(colorsDemo());
-		topBox.add(blockTextKeyboardDemo());
-		topBox.add(colorChooserDemo());
+		topBox.add(testSquareGradient());
+		topBox.add(colorChooserDemoFull());
+		topBox.add(colorChooserDemoBig());
+		topBox.add(colorChooserDemoMedium());
+		topBox.add(colorChooserDemoMinimal());
 
+ 		topBox.add(testHueSelector());
 	}
 
 	BoxList demo1() {
@@ -160,20 +169,21 @@ public class Demo {
 		BoxContainer p = new BoxContainer();
 		p.setColor(green);
 		radialGradient = new RadialGradient(new Point(3, 3), new Point(7, 7),
-				0.0f, 1.0f, ColorGradient.Target.BRIGHTNESS, ColorGradient.Repeatable.NONE);
+				0.0f, 1.0f, ColorGradient.Target.BRIGHTNESS,
+				ColorGradient.Repeatable.NONE);
 		p.setColorGradient(radialGradient);
 		p.setBoxEventListener(new BoxEventAdapter() {
 			@Override
 			public boolean onRelease(int x, int y) {
-				radialGradient.setStartPoint(new Point(x,y));
-				radialGradient.setEndPoint(new Point(x+8,y));
+				radialGradient.setStartPoint(new Point(x, y));
+				radialGradient.setEndPoint(new Point(x + 8, y));
 				return false;
 			}
 
 			@Override
 			public boolean onDrag(int x, int y, int newX, int newY) {
 				radialGradient.setStartPoint(new Point(newX, newY));
-				radialGradient.setEndPoint(new Point(newX+8,newY));
+				radialGradient.setEndPoint(new Point(newX + 8, newY));
 				return false;
 			}
 
@@ -185,24 +195,25 @@ public class Demo {
 
 	BoxContainer testLinearGradient() {
 		BoxContainer p = new BoxContainer();
-		linearGradient = new LinearGradient(new Point(3, 3), new Point(7, 7),
-				0.1f, 0.4f, ColorGradient.Target.HUE, ColorGradient.Repeatable.NONE);
+		p.setColor(green);
+		linearGradient = new LinearGradient(new Point(-1,-1), new Point(3, 3),
+				1.0f, 0.0f, ColorGradient.Target.BRIGHTNESS,
+				ColorGradient.Repeatable.NONE);
 		p.setColorGradient(linearGradient);
 		p.setBoxEventListener(new BoxEventAdapter() {
 
 			@Override
 			public boolean onRelease(int x, int y) {
-				linearGradient.setStartPoint(new Point(x,y));
-				linearGradient.setEndPoint(new Point(x+8,y+8));
+				linearGradient.setStartPoint(new Point(x, y));
+				linearGradient.setEndPoint(new Point(x + 8, y + 8));
 				return false;
 			}
 
 			@Override
 			public boolean onDrag(int x, int y, int newX, int newY) {
-				linearGradient.setStartPoint(new Point(newX, newY));
+				linearGradient.setEndPoint(new Point(newX, newY));
 				return false;
 			}
-
 		});
 		return p;
 	}
@@ -261,10 +272,14 @@ public class Demo {
 						(float) (Math.random()));
 				if (Math.random() > 0.5) {
 					box.setColorGradient(new RadialGradient(Point.random(),
-							Point.random(), (float)(Math.random()), (float)(Math.random()), ColorGradient.Target.HUE, ColorGradient.Repeatable.NONE));
+							Point.random(), (float) (Math.random()),
+							(float) (Math.random()), ColorGradient.Target.HUE,
+							ColorGradient.Repeatable.NONE));
 				} else {
 					box.setColorGradient(new LinearGradient(Point.random(),
-							Point.random(), (float)(Math.random()), (float)(Math.random()), ColorGradient.Target.HUE, ColorGradient.Repeatable.NONE));
+							Point.random(), (float) (Math.random()),
+							(float) (Math.random()), ColorGradient.Target.HUE,
+							ColorGradient.Repeatable.NONE));
 				}
 
 				int max = (int) (Math.random() * 50);
@@ -501,7 +516,7 @@ public class Demo {
 
 			@Override
 			public boolean onRelease(int x, int y) {
-				reloadBoxes(3,3);
+				reloadBoxes(3, 3);
 				return true;
 			}
 
@@ -522,7 +537,7 @@ public class Demo {
 			public boolean onDrag(int x, int y, int newX, int newY) {
 				if (newX != x) {
 					if (newX > x) {
-						 incBrightness();
+						incBrightness();
 						inc -= 0.001f;
 						if (inc <= 1.0f / 360.0f)
 							inc = 1.0f / 360.0f;
@@ -530,7 +545,7 @@ public class Demo {
 						inc += 0.001f;
 						if (inc >= 1.0f / 64.0f)
 							inc = 1.0f / 64.0f;
-						 decBrightness();
+						decBrightness();
 					}
 				} else if (newY != y) {
 					if (newY > y) {
@@ -539,7 +554,7 @@ public class Demo {
 						decSaturation();
 					}
 				}
-				reloadBoxes(3,3);
+				reloadBoxes(3, 3);
 				return true;
 			}
 
@@ -593,14 +608,85 @@ public class Demo {
 		});
 		return ret;
 	}
+
 	public BoxContainer blockTextKeyboardDemo() {
 		final BoxContainer ret = new BoxContainer();
 		ret.add(new BlocksTextKeyboard());
 		return ret;
 	}
-	public BoxContainer colorChooserDemo() {
+
+	public BoxContainer colorChooserDemoFull() {
 		final BoxContainer ret = new BoxContainer();
 		ret.add(new ColorChooser());
+		return ret;
+	}
+	public BoxContainer colorChooserDemoMinimal() {
+		final BoxContainer ret = new BoxContainer();
+		ret.add(new ColorChooser(ColorChooser.Size.MINIMAL));
+		return ret;
+	}
+	public BoxContainer colorChooserDemoMedium() {
+		final BoxContainer ret = new BoxContainer();
+		ret.add(new ColorChooser(ColorChooser.Size.MEDIUM));
+		return ret;
+	}
+	public BoxContainer colorChooserDemoBig() {
+		final BoxContainer ret = new BoxContainer();
+		ret.add(new ColorChooser(ColorChooser.Size.BIG));
+		return ret;
+	}
+
+	public BoxContainer testSquareGradient() {
+		final BoxContainer p = new BoxContainer();
+		Box b = new Box(2, 2, 5, 5);
+		b.setColor(green);
+		p.add(b);
+		final SquareGradient squareGradient = new SquareGradient(
+				new Point(2, 2), new Point(5, 5), 0.0f, 1.0f,
+				ColorGradient.Target.HUE, ColorGradient.Repeatable.NONE);
+		squareGradient.setColumnOrder(SquareGradient.ColumnOrder.FROM_CENTER);
+		squareGradient.setRowOrder(SquareGradient.RowOrder.FROM_TOP);
+		squareGradient.setStartValue(0.5f);
+		b.setColorGradient(squareGradient);
+		p.setBoxEventListener(new BoxEventAdapter() {
+
+			@Override
+			public boolean onRelease(int x, int y) {
+				float hue = squareGradient.getValueAt(x, y);
+				squareGradient.setStartValue(hue);
+				// squareGradient.setEndPoint(new Point(x+8,y+8));
+				return false;
+			}
+
+			@Override
+			public boolean onDrag(int x, int y, int newX, int newY) {
+				if (newX != x) {
+					if (newX > x) {
+						squareGradient.incValue((newX - x) * 8);
+					} else {
+						squareGradient.decValue((x - newX) * 8);
+					}
+					// float value = colorGradient.getStartValue();
+					// colorGradient.setStartValue(value - (newX - x) * 0.01f);
+				} else if (newY != y) {
+					if (newY > y) {
+						squareGradient.incGap((newY - y) * 8);
+					} else {
+						squareGradient.decGap((y - newY) * 8);
+					}
+				}
+
+				return false;
+			}
+
+		});
+		return p;
+	}
+
+	public BoxContainer testHueSelector() {
+		final BoxContainer ret = new BoxContainer();
+		 ret.add(new Button(0,0,8,1,new Color(1,0,1,1), new Color(0,1,0,1)));
+		ret.add(new HueSelector(1, 1, 4, 7, 0.5f, 1, 1));
 		return ret;
 	}
 }

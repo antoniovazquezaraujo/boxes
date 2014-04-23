@@ -43,7 +43,7 @@ public class LinearGradient extends ColorGradient {
 		update();
 	}
 	@Override
-	protected void update(){
+	public void update(){
 		float totalDistance = (float) startPoint.distance(endPoint);
 		for (int col = 0; col < 8; col++) {
 			for (int row = 0; row < 8; row++) {
@@ -66,5 +66,11 @@ public class LinearGradient extends ColorGradient {
 								+ Math.pow(p2.y - p1.y, 2));
 		double d = ch / del;
 		return (float) d;
+	}
+
+	@Override
+	public float getGap() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

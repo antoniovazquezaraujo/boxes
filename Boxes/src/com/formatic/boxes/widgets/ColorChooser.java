@@ -23,7 +23,8 @@ package com.formatic.boxes.widgets;
 
 import com.formatic.boxes.Color;
 import com.formatic.boxes.Point;
-import com.formatic.boxes.widgets.events.BoxEventAdapter;
+import com.formatic.boxes.gradients.ColorGradient;
+import com.formatic.boxes.gradients.SquareGradient;
 
 interface PreviewButtonListener {
 	public void valueChanged(int change);
@@ -33,134 +34,29 @@ interface HueSelectorListener {
 	public void valueChanged(float change);
 }
 
-class PreviewButton extends Button {
-
-	public PreviewButton(int x, int y, int width, int height, Color normalColor) {
-		super(x, y, width, height, normalColor, normalColor);
-	}
-
-	private PreviewButtonListener previewButtonListener;
-
-	public void setPreviewButtonListener(
-			PreviewButtonListener previewButtonListener) {
-		this.previewButtonListener = previewButtonListener;
-	}
-
-	@Override
-	public boolean onDrag(int x, int y, int newX, int newY) {
-		if (x != newX) {
-			previewButtonListener.valueChanged(newX - x);
-		}
-		return true;
-	}
-
-}
-
-class HueSelector extends BoxContainer {
-	enum Direction{
-		UP, DOWN
-	}
-	HueSelectorListener hueSelectorListener;
-	float hue, delta;
-	float minDelta, maxDelta;
-	float minHue, maxHue;
-	float saturation, brightness;
-
-	public void setSaturation(float saturation) {
-		this.saturation = saturation;
-	}
-
-	public void setBrightness(float brightness) {
-		this.brightness = brightness;
-	}
-
-	public HueSelector(int x, int y, int width, int height, float hue,
-			float saturation, float brightness, float delta) {
-		super(x, y, width, height);
-		this.hue = hue;
-		this.delta = delta;
-		this.saturation = saturation;
-		this.brightness = brightness;
-		createBoxes();
-		this.minHue = 0.00000000f;
-		this.maxHue = 1.00000000f;
-		this.maxDelta = 6 / boxes.size();
-		this.minDelta = maxHue / 360.0f;
-	}
-
-	void createBoxes() {
-		for (int x = 0; x < getSize().width; x++) {
-			for (int y = 0; y < getSize().height; y++) {
-				add(new Box(x, y, 1, 1, new Color(hue, saturation, brightness)));
-			}
-		}
-	}
-
-	@Override
-	public boolean onRelease(int x, int y) {
-		Box next = boxAtPos(new Point(x, y));
-		hue = next.getColor().getHue();
-		if (hueSelectorListener != null) {
-			hueSelectorListener.valueChanged(hue);
-		}
-		return true;
-	}
-
-	@Override
-	public boolean onDrag(int x, int y, int newX, int newY) {
-		if (newX != x) {
-			hue -= (newX - x) * 0.01f;
-		} else if (newY != y) {
-			delta += (newY - y) * 0.001f;
-		}
-		System.out.println("Hue:" + hue + " Delta:" + delta);
-		if (hueSelectorListener != null) {
-			hueSelectorListener.valueChanged(hue);
-		}
-		return true;
-	}
-
-	public void paint(){
-		paint(Direction.UP, hue, delta);
-		paint(Direction.DOWN, hue, delta);		
-	}
-	public void setHue(float hue) {
-		this.hue = hue;
-		paint();
-	}
-
-	private void paint(Direction direction, float hue, float delta) {
-	}
-
-	public void setDelta(float delta) {
-		this.delta = delta;
-		paint();
-	}
-
-	public void setHueSelectorListener(HueSelectorListener hueSelectorListener) {
-		this.hueSelectorListener = hueSelectorListener;
-	}
-}
-
 public class ColorChooser extends BoxContainer {
-	PreviewButton saturationButton, brightnessButton;
+	int baseWidth, baseHeight;
+	ScrollButton saturationButton, brightnessButton;
 	HueSelector hueSelector;
 	Color selectedColor;
-
+	public enum Size{
+		MINIMAL, MEDIUM, BIG, FULL
+	}
 	public ColorChooser() {
-		this(new Color(1, 0, 1, 1));
+		this(Size.FULL);
 	}
 
-	public ColorChooser(Color color) {
+	public ColorChooser(Size size) {
 		super(8, 8);
-		selectedColor = color;
-		saturationButton = new PreviewButton(0, 0, 8, 1, selectedColor);
+		adjustSizes(size);
+		setSize(baseWidth, baseHeight);
+		selectedColor = new Color(1,0,1,1);
+		saturationButton = new ScrollButton(0, 0, baseWidth, 1, selectedColor,new Color(1,0,0,1),ColorGradient.Target.SATURATION);
 		saturationButton.setNormalColor(selectedColor);
-		brightnessButton = new PreviewButton(0, 7, 8, 1, selectedColor);
+		brightnessButton = new ScrollButton(0, baseHeight-1, baseWidth, 1, selectedColor,new Color(0,1,0,1),ColorGradient.Target.BRIGHTNESS);
 		brightnessButton.setNormalColor(selectedColor);
-		hueSelector = new HueSelector(0, 1, 8, 6, selectedColor.getHue(),
-				selectedColor.getSaturation(), selectedColor.getBrightness(),
-				0.01f);
+		hueSelector = new HueSelector(0, 1, baseWidth, baseHeight-2, selectedColor.getHue(),
+				selectedColor.getSaturation(), selectedColor.getBrightness());
 		hueSelector.setHueSelectorListener(new HueSelectorListener() {
 			@Override
 			public void valueChanged(float change) {
@@ -187,7 +83,25 @@ public class ColorChooser extends BoxContainer {
 		add(saturationButton);
 		add(brightnessButton);
 		add(hueSelector);
-
 	}
-
+	public void adjustSizes(Size size){
+		switch(size){
+		case BIG:
+			baseWidth=4;
+			baseHeight=8;
+			break;
+		case FULL:
+			baseWidth=8;
+			baseHeight=8;
+			break;
+		case MEDIUM:
+			baseWidth=3;
+			baseHeight=6;
+			break;
+		case MINIMAL:
+			baseWidth=2;
+			baseHeight=5;
+			break;
+		}
+	}
 }
