@@ -21,7 +21,7 @@
 */
 package com.formatic.boxes.widgets;
 
-import com.formatic.boxes.widgets.events.BoxEventListener;
+import com.formatic.boxes.widgets.events.BoxEventAdapter;
 import com.formatic.boxes.widgets.events.RotatorListener;
 
 
@@ -55,7 +55,7 @@ public class Rotator extends BoxContainer{
 		rotateColors();
 		lastX =0;
 		lastY=0;
-		setBoxEventListener(new BoxEventListener() {
+		setBoxEventListener(new BoxEventAdapter() {
 			
 			@Override
 			public boolean onZoomOut(int x, int y) {

@@ -32,8 +32,8 @@ import com.formatic.boxes.widgets.events.BoxDisplayListener;
 import com.formatic.boxes.widgets.events.BoxEventListener;
 
 public class Box implements BoxEventListener, BoxDisplayListener {
-	private Point position;
-	private Dimension size;
+	protected Point position;
+	protected Dimension size;
 	Color color;
 	public ColorGradient colorGradient;
 	protected BoxContainer container;
@@ -159,7 +159,15 @@ public class Box implements BoxEventListener, BoxDisplayListener {
 		}
 		return false;
 	}
-
+	@Override
+	public boolean onZoomIn(int x, int y) {
+		if (boxEventListener != null) {
+			if (boxEventListener.onZoomIn(x, y)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	@Override
 	public boolean onZoomOut(int x, int y) {
 		if (container != null) {
@@ -184,6 +192,7 @@ public class Box implements BoxEventListener, BoxDisplayListener {
 		}
 		return false;
 	}
+
 
 	public boolean contains(Point p) {
 		return p.x >= getPosition().x

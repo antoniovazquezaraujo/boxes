@@ -21,7 +21,7 @@
 */
 package com.formatic.boxes.widgets;
 
-import com.formatic.boxes.widgets.events.BoxEventListener;
+import com.formatic.boxes.widgets.events.BoxEventAdapter;
 import com.formatic.boxes.widgets.events.NumberKeyboardListener;
 
 public class NumberKeyboard extends BoxContainer {
@@ -43,7 +43,7 @@ public class NumberKeyboard extends BoxContainer {
 		add(switches[3]);
 		selected = 0;
 		allClean=true;
-		setBoxEventListener(new BoxEventListener() {
+		setBoxEventListener(new BoxEventAdapter() {
 			@Override
 			public boolean onZoomOut(int x, int y) {
 				// TODO Auto-generated method stub

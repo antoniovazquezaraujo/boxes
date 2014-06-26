@@ -33,8 +33,10 @@ public class Selector extends BoxContainer implements ButtonListener {
 	private Button next, prev, select;
 	Vector<Box> selectingBoxes;
 	private Box selectedBox;
+	private Box oldSelectedBox;
 	private int selectedIndex;
 	boolean running;
+	private Dialog dialog;
 
 	public Selector() {
 		setSize(8, 8);
@@ -148,6 +150,21 @@ public class Selector extends BoxContainer implements ButtonListener {
 			return selectedBox.onDrag(x, y, newX, newY);
 		}
 		return super.onDrag(x, y, newX, newY);
+	}
+
+	public void showDialog(Dialog dialog) {
+		this.dialog = dialog;
+		oldSelectedBox = selectedBox;
+		selectedBox = dialog;
+		setBoxDisplayListener(dialog);
+		setBoxEventListener(dialog);
+	}
+
+	public void hideDialog() {
+		this.dialog=null;
+		selectedBox = oldSelectedBox;
+		setBoxDisplayListener(selectedBox);
+		setBoxEventListener(selectedBox);
 	}
 
 }

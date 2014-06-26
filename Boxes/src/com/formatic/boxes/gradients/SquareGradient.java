@@ -26,10 +26,10 @@ public class SquareGradient extends ColorGradient {
 	private RowOrder rowOrder;
 
 	private Alignment alignment;
-
 	private float leftValue, rightValue;
 	private float leftGap, rightGap;
 	private int gapDivider;
+	private int minGapDivider;
 
 	public SquareGradient(Point startPoint, Point endPoint, float minValue,
 			float maxValue) {
@@ -45,8 +45,9 @@ public class SquareGradient extends ColorGradient {
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 		this.startValue = minValue;
-		this.gapDivider = 6;
-		this.gap = 1.0f/gapDivider;
+		this.minGapDivider = 6;
+		this.gapDivider = minGapDivider;
+		this.gap = 1.0f / gapDivider;
 		this.leftGap = gap * -1;
 		this.rightGap = gap;
 		this.columnOrder = ColumnOrder.FROM_LEFT;
@@ -57,44 +58,66 @@ public class SquareGradient extends ColorGradient {
 
 	}
 
-	public void incValue(){
+	public void setValue(float value){
+		this.startValue=value;
+	}
+	public void setMinGapDivider(int minGapDivider) {
+		this.minGapDivider = minGapDivider;
+		this.gapDivider = minGapDivider;
+		gap = 1.0f / gapDivider;
+		this.leftGap = gap * -1.0f;
+		this.rightGap = gap;
+		limitValues();
+		update();
+	}
+
+	public void incValue() {
 		incValue(1);
 	}
-	public void incValue(int inc){
-		startValue+=rightGap*inc;
+
+	public void incValue(int inc) {
+		startValue += rightGap * inc;
+		limitValues();
 		update();
 	}
-	public void decValue(){
+
+	public void decValue() {
 		decValue(1);
 	}
-	public void decValue(int dec){
-		startValue+=leftGap*dec;
+
+	public void decValue(int dec) {
+		startValue += leftGap * dec;
+		limitValues();
 		update();
 	}
-	public void incGap(){
+
+	public void incGap() {
 		incGap(1);
 	}
-	public void incGap(int dec){
-		gapDivider-=dec;
-		if(gapDivider <6){
-			gapDivider=6;
+
+	public void incGap(int dec) {
+		gapDivider -= dec;
+		if (gapDivider < minGapDivider) {
+			gapDivider = minGapDivider;
 		}
-		gap = 1.0f/gapDivider;
-//		leftGap = gap * -1;
-//		rightGap = gap;
+		gap = 1.0f / gapDivider;
+		// leftGap = gap * -1;
+		// rightGap = gap;
 		update();
 	}
-	public void decGap(){
+
+	public void decGap() {
 		decGap(1);
 	}
-	public void decGap(int inc){
-		gapDivider+=inc;
-		if(gapDivider > 360){
-			gapDivider=360;
+
+	public void decGap(int inc) {
+		gapDivider += inc;
+		if (gapDivider > 360) {
+			gapDivider = 360;
 		}
-		gap = 1.0f/gapDivider;
-//		leftGap = gap * -1;
-//		rightGap = gap;
+		gap = 1.0f / gapDivider;
+		// leftGap = gap * -1;
+		// rightGap = gap;
 		update();
 	}
 
@@ -102,6 +125,7 @@ public class SquareGradient extends ColorGradient {
 		this.gap = gap;
 		update();
 	}
+
 	public Alignment getAlignment() {
 		return alignment;
 	}
@@ -115,19 +139,20 @@ public class SquareGradient extends ColorGradient {
 		switch (repeatable) {
 		case NONE:
 			if (rightValue + rightGap >= maxValue) {
-				rightGap = 0;
+				rightValue = maxValue;
+			} else if (rightValue + rightGap < minValue) {
+				rightValue = minValue;
+			} else{
+				rightValue += rightGap;
 			}
-			if (rightValue + rightGap < minValue) {
-				rightGap = 0;
-			}
+
 			if (leftValue + leftGap < minValue) {
-				leftGap = 0;
+				leftValue = minValue;
+			} else if (leftValue + leftGap >= maxValue) {
+				leftValue = maxValue;
+			} else {
+				leftValue += leftGap;
 			}
-			if (leftValue + leftGap >= maxValue) {
-				leftGap = 0;
-			}
-			rightValue += rightGap;
-			leftValue += leftGap;
 			break;
 		case REMOUNTING:
 			if (rightGap >= 0) {
@@ -176,7 +201,6 @@ public class SquareGradient extends ColorGradient {
 
 	@Override
 	public void update() {
-		System.out.println(gap);
 		this.width = (endPoint.x - startPoint.x);
 		this.height = (endPoint.y - startPoint.y);
 		int centerCol = width / 2;

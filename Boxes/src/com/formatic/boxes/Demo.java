@@ -40,6 +40,8 @@ import com.formatic.boxes.widgets.BoxList.LayoutType;
 import com.formatic.boxes.widgets.Button;
 import com.formatic.boxes.widgets.CharBox;
 import com.formatic.boxes.widgets.ColorChooser;
+import com.formatic.boxes.widgets.ColorChooserDialog;
+import com.formatic.boxes.widgets.Dialog.DialogChoice;
 import com.formatic.boxes.widgets.HueSelector;
 import com.formatic.boxes.widgets.NumberKeyboard;
 import com.formatic.boxes.widgets.Rotator;
@@ -47,7 +49,8 @@ import com.formatic.boxes.widgets.Selector;
 import com.formatic.boxes.widgets.TextBox;
 import com.formatic.boxes.widgets.TextKeyboard;
 import com.formatic.boxes.widgets.events.BoxEventAdapter;
-import com.formatic.boxes.widgets.events.BoxEventListener;
+import com.formatic.boxes.widgets.events.ButtonListener;
+import com.formatic.boxes.widgets.events.DialogListener;
 import com.formatic.boxes.widgets.events.NumberKeyboardListener;
 import com.formatic.boxes.widgets.events.RotatorListener;
 import com.formatic.boxes.widgets.events.TextKeyboardListener;
@@ -91,12 +94,12 @@ public class Demo {
 		topBox.add(testRadialGradient());
 		topBox.add(testLinearGradient());
 		topBox.add(testSquareGradient());
+ 		topBox.add(testHueSelector());
 		topBox.add(colorChooserDemoFull());
 		topBox.add(colorChooserDemoBig());
 		topBox.add(colorChooserDemoMedium());
 		topBox.add(colorChooserDemoMinimal());
-
- 		topBox.add(testHueSelector());
+		topBox.add(colorChooserDialogDemo());
 	}
 
 	BoxList demo1() {
@@ -306,7 +309,7 @@ public class Demo {
 		b.add(c);
 		final BoxContainer p = new BoxContainer();
 		p.add(ret);
-		p.setBoxEventListener(new BoxEventListener() {
+		p.setBoxEventListener(new BoxEventAdapter() {
 
 			private Box movingBox;
 
@@ -687,6 +690,49 @@ public class Demo {
 		final BoxContainer ret = new BoxContainer();
 		 ret.add(new Button(0,0,8,1,new Color(1,0,1,1), new Color(0,1,0,1)));
 		ret.add(new HueSelector(1, 1, 4, 7, 0.5f, 1, 1));
+		return ret;
+	}
+	public BoxContainer colorChooserDialogDemo() {
+		final BoxContainer ret = new BoxContainer();
+		 final Button theButton = new Button(1,1,2,2,new Color(1,0,1,1), new Color(0,1,0,1));
+		 ret.add(theButton);
+		 theButton.setButtonListener(new ButtonListener() {
+			
+			@Override
+			public boolean onClick(Button b) {
+				final ColorChooserDialog d = new ColorChooserDialog();
+				d.show();
+				d.setDialogListener(new DialogListener(){
+					@Override
+					public void accepted() {
+						theButton.setNormalColor(d.getSelectedColor());
+					}
+					@Override
+					public void canceled() {
+					}
+				});
+				return false;
+			}
+		});
+		 final Button theButton2 = new Button(4,4,2,2,new Color(1,0,1,1), new Color(0,1,0,1));
+		 ret.add(theButton2);
+		 theButton2.setButtonListener(new ButtonListener() {
+				@Override
+				public boolean onClick(Button b) {
+					final ColorChooserDialog d = new ColorChooserDialog();
+					d.show();
+					d.setDialogListener(new DialogListener(){
+						@Override
+						public void accepted() {
+							theButton2.setNormalColor(d.getSelectedColor());
+						}
+						@Override
+						public void canceled() {
+						}
+					});
+					return false;
+				}
+			});
 		return ret;
 	}
 }

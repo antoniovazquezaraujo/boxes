@@ -26,7 +26,7 @@ import com.formatic.boxes.Font;
 import com.formatic.boxes.Point;
 import com.formatic.boxes.ScreenModel;
 import com.formatic.boxes.widgets.events.BlockSelectorListener;
-import com.formatic.boxes.widgets.events.BoxEventListener;
+import com.formatic.boxes.widgets.events.BoxEventAdapter;
 import com.formatic.boxes.widgets.events.CharSelectorListener;
 
 public class CharSelector extends BoxContainer implements BlockSelectorListener {
@@ -52,7 +52,7 @@ public class CharSelector extends BoxContainer implements BlockSelectorListener 
 		addCharBoxes();
 		updateChars();
 
-		setBoxEventListener(new BoxEventListener() {
+		setBoxEventListener(new BoxEventAdapter() {
 			@Override
 			public boolean onZoomOut(int x, int y) {
 				// TODO Auto-generated method stub

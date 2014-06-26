@@ -27,4 +27,5 @@ public interface BoxEventListener {
 	boolean onRelease(int x, int y);
 	boolean onDrag(int x, int y, int newX, int newY);
 	boolean onZoomOut(int x, int y);
+	boolean onZoomIn(int x, int y);
 }

@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.formatic.boxes.Color;
-import com.formatic.boxes.widgets.events.BoxEventListener;
+import com.formatic.boxes.widgets.events.BoxEventAdapter;
 import com.formatic.boxes.widgets.events.ButtonListener;
 import com.formatic.boxes.widgets.events.TextKeyboardListener;
 
@@ -245,7 +245,7 @@ public class TextKeyboard extends BoxContainer implements ButtonListener {
 		keys = new KeyboardKey[8][4];
 		populateKeys();
 		addKeys();
-		setBoxEventListener(new BoxEventListener() {
+		setBoxEventListener(new BoxEventAdapter() {
 			@Override
 			public boolean onZoomOut(int x, int y) {
 				// TODO Auto-generated method stub

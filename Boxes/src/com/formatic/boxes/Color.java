@@ -77,6 +77,16 @@ public class Color extends com.badlogic.gdx.graphics.Color{
 	public float getHue(){
 		return hue;
 	}
+	//sorry for the strange notation "tune... :-) "
+	public void tuneSaturation(float variation){
+		setSaturation(saturation+variation);
+	}
+	public void tuneHue(float variation){
+		setHue(hue+variation);
+	}
+	public void tuneBrightness(float variation){
+		setBrightness(brightness+variation);
+	}
 	public void setSaturation(float saturation){
 		this.saturation = saturation;
 		this.mode=Mode.HSB;

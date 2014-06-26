@@ -18,9 +18,8 @@
 
     You should have received a copy of the GNU General Public License
     along with Boxes.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package com.formatic.boxes.games;
-
 
 import com.formatic.boxes.Color;
 import com.formatic.boxes.Point;
@@ -28,13 +27,14 @@ import com.formatic.boxes.commands.BatchCommand;
 import com.formatic.boxes.commands.ColorChanger;
 import com.formatic.boxes.widgets.Box;
 import com.formatic.boxes.widgets.BoxContainer;
-import com.formatic.boxes.widgets.events.BoxEventListener;
+import com.formatic.boxes.widgets.events.BoxEventAdapter;
 
 enum ChessColor {
 	WHITE, BLACK
 }
 
-class Piece extends Box {
+
+abstract class Piece extends Box {
 	final float BLACK_HUE = 0.0f;
 	final float WHITE_HUE = 0.240f;
 	private Board board;
@@ -44,15 +44,17 @@ class Piece extends Box {
 		setX(x);
 		setY(y);
 		chessColor = color;
-		if(chessColor == ChessColor.BLACK){
+		if (chessColor == ChessColor.BLACK) {
 			setHue(BLACK_HUE);
-		}else{
+		} else {
 			setHue(WHITE_HUE);
 		}
 		setSaturation(1.0f);
 		setBrightness(1.0f);
 		addAnimations();
 	}
+
+	abstract void updatePosibleMoves(Board board);
 
 	ChessColor getPieceColor() {
 		return chessColor;
@@ -81,8 +83,21 @@ class King extends Piece {
 		float toValue = 0.3001f;
 		int step = 0;
 		ColorChanger change = new ColorChanger(times, rangeTime, fromValue,
-													toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
+				toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
+	}
+
+	@Override
+	void updatePosibleMoves(Board board) {
+		for(int row = 0; row<3;row++){
+			for(int col=0; col<3; col++){
+				int x = position.x-1 + row;
+				int y = position.y-1 + col;
+//				if(board.pieceAtPos(x,y) == board.checkersBoard){
+					board.posibleMoves.set(x,y);
+//				}				
+			}
+		}
 	}
 }
 
@@ -99,8 +114,14 @@ class Queen extends Piece {
 		float toValue = 0.5f;
 		int step = 1;
 		ColorChanger change = new ColorChanger(times, rangeTime, fromValue,
-													toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
+				toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
+	}
+
+	@Override
+	void updatePosibleMoves(Board board) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
@@ -119,13 +140,13 @@ class Horse extends Piece {
 		float toValue = 0.7001f;
 		int step = 1;
 		ColorChanger change = new ColorChanger(times, rangeTime, fromValue,
-													toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
-		batch.addCommand(change);	
-		
+				toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
+		batch.addCommand(change);
+
 		fromValue = 0.5001f;
 		toValue = 0.5005f;
 		change = new ColorChanger(times, rangeTime, fromValue, toValue, step,
-									ColorChanger.ColorChangeType.BRIGHTNESS);
+				ColorChanger.ColorChangeType.BRIGHTNESS);
 		batch.addCommand(change);
 		addCommand(batch);
 		times = 1;
@@ -133,8 +154,14 @@ class Horse extends Piece {
 		fromValue = 0.5001f;
 		toValue = 0.5005f;
 		change = new ColorChanger(times, rangeTime, fromValue, toValue, step,
-									ColorChanger.ColorChangeType.BRIGHTNESS);
+				ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
+	}
+
+	@Override
+	void updatePosibleMoves(Board board) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
@@ -152,13 +179,19 @@ class Tower extends Piece {
 		float toValue = 0.7001f;
 		int step = 0;
 		ColorChanger change = new ColorChanger(times, rangeTime, fromValue,
-													toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
+				toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
 		fromValue = 0.5001f;
 		toValue = 0.5f;
 		change = new ColorChanger(times, rangeTime, fromValue, toValue, step,
-									ColorChanger.ColorChangeType.BRIGHTNESS);
+				ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
+
+	}
+
+	@Override
+	void updatePosibleMoves(Board board) {
+		// TODO Auto-generated method stub
 
 	}
 
@@ -177,8 +210,14 @@ class Pawn extends Piece {
 		float toValue = 0.7001f;
 		int step = 0;
 		ColorChanger change = new ColorChanger(times, rangeTime, fromValue,
-													toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
+				toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
+
+	}
+
+	@Override
+	void updatePosibleMoves(Board board) {
+		// TODO Auto-generated method stub
 
 	}
 
@@ -198,22 +237,28 @@ class Bishop extends Piece {
 		float toValue = 0.3f;
 		int step = 1;
 		ColorChanger change = new ColorChanger(times, rangeTime, fromValue,
-													toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
+				toValue, step, ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
 		toValue = 0.9f;
 		fromValue = 0.3f;
 
 		change = new ColorChanger(times, rangeTime, fromValue, toValue, step,
-									ColorChanger.ColorChangeType.BRIGHTNESS);
+				ColorChanger.ColorChangeType.BRIGHTNESS);
 		addCommand(change);
+
+	}
+
+	@Override
+	void updatePosibleMoves(Board board) {
+		// TODO Auto-generated method stub
 
 	}
 
 }
 
 class CheckersBoard extends BoxContainer {
-	Color black = new Color(0.8f, 0.8f, 0.8f, 1);
-	Color white = new Color(0.9f, 0.9f, 0.9f, 1);
+	Color black = new Color(0.8f, 0.8f, 0.8f, 0.3f);
+	Color white = new Color(0.9f, 0.9f, 0.9f, 0.3f);
 
 	public CheckersBoard() {
 		boolean flip = true;
@@ -233,8 +278,33 @@ class CheckersBoard extends BoxContainer {
 
 }
 
+class PosibleMoves extends BoxContainer {
+	public PosibleMoves() {
+		super(8,8);
+		reset();
+	}
+
+	public void reset() {
+		for (int n = 0; n < 8; n++) {
+			for (int m = 0; m < 8; m++) {
+				add(new Box(n,m, 1,1));
+			}
+		}
+	}
+	public void reset(int x, int y) {
+		boxAtPos(new Point(x,y)).setColor(new Color(0,0,0,1));
+	}
+
+	public void set(int x, int y) {
+		Box b = boxAtPos(new Point(x,y));
+		if(b != null){
+			b.setColor(new Color(0,1,0,1));
+		}
+	}
+}
 class Board extends BoxContainer {
 	CheckersBoard checkersBoard;
+	PosibleMoves posibleMoves;
 
 	public void addPiece(Piece piece) {
 		super.add((Box) piece);
@@ -249,8 +319,11 @@ class Board extends BoxContainer {
 	}
 
 	Board() {
+		posibleMoves = new PosibleMoves();
+		add(posibleMoves);
 		checkersBoard = new CheckersBoard();
 		add(checkersBoard);
+
 		addPiece(new Tower(0, 0, ChessColor.WHITE));
 		addPiece(new Tower(0, 7, ChessColor.BLACK));
 		addPiece(new Tower(7, 0, ChessColor.WHITE));
@@ -273,7 +346,7 @@ class Board extends BoxContainer {
 			addPiece(new Pawn(n, 1, ChessColor.WHITE));
 			addPiece(new Pawn(n, 6, ChessColor.BLACK));
 		}
-		setBoxEventListener(new BoxEventListener() {
+		setBoxEventListener(new BoxEventAdapter() {
 
 			private Piece movingPiece;
 
@@ -294,6 +367,9 @@ class Board extends BoxContainer {
 				Piece p = pieceAtPos(x, y);
 				if (p != null) {
 					movingPiece = p;
+					Piece piece = pieceAtPos(x, y);
+					posibleMoves.reset();
+					piece.updatePosibleMoves(Board.this);
 				}
 				return false;
 			}
@@ -309,12 +385,13 @@ class Board extends BoxContainer {
 				if (movingPiece != null) {
 					Piece enemy = pieceAtPos(newX, newY);
 					if (enemy != null) {
-						if (enemy.getPieceColor() != movingPiece.getPieceColor()) {
+						if (enemy.getPieceColor() != movingPiece
+								.getPieceColor()) {
 							removePiece(enemy);
 							movingPiece.setX(newX);
 							movingPiece.setY(newY);
 						}
-					}else{
+					} else {
 						movingPiece.setX(newX);
 						movingPiece.setY(newY);
 					}

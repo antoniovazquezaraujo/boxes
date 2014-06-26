@@ -30,7 +30,7 @@ public class Boxes implements ApplicationListener {
 	ScreenModel screenModel;
 	ScreenRenderer screenRenderer;
 	ScreenController screenController;
-	Selector topBox;
+	public static Selector topBox;
 	GestureDetector gestureDetector;
 
 	@Override

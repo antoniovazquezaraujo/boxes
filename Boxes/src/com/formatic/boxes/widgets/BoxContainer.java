@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU General Public License
     along with Boxes.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package com.formatic.boxes.widgets;
 
 import java.util.Vector;
@@ -32,14 +32,15 @@ public class BoxContainer extends Box {
 	Point at;
 
 	public BoxContainer() {
-		this(8,8);
+		this(8, 8);
 	}
 
 	public BoxContainer(int width, int height) {
-		this(0,0,width, height);
+		this(0, 0, width, height);
 	}
+
 	public BoxContainer(int x, int y, int width, int height) {
-		super(x,y, width, height);
+		super(x, y, width, height);
 		boxes = new Vector<Box>();
 		at = new Point(0, 0);
 	}
@@ -76,9 +77,10 @@ public class BoxContainer extends Box {
 		boxes.remove(box);
 	}
 
-	public void clear(){
+	public void clear() {
 		boxes.clear();
 	}
+
 	public void remove(int x, int y) {
 		Point p = new Point(x, y);
 		for (Box b : boxes) {
@@ -118,6 +120,17 @@ public class BoxContainer extends Box {
 		return null;
 	}
 
+	public Vector<Box> boxesAtPos(Point p) {
+		Vector<Box> bap = new Vector<Box>();
+		for (int n = boxes.size() - 1; n >= 0; n--) {
+			Box box = boxes.get(n);
+			if (box.contains(p)) {
+				bap.add(box);
+			}
+		}
+		return bap;
+	}
+
 	public void onClose(Box box) {
 
 	}
@@ -128,12 +141,14 @@ public class BoxContainer extends Box {
 			return true;
 		}
 		at.setLocation(x, y);
-		Box box = boxAtPos(at);
-		if (box != null) {
-			if (box != this) {
-				if (box.onTouch(x - box.getPosition().x,
-								y - box.getPosition().y)) {
-					return true;
+		Vector<Box> bap = boxesAtPos(at);
+		for (Box box : bap) {
+			if (box != null) {
+				if (box != this) {
+					if (box.onTouch(x - box.getPosition().x,
+							y - box.getPosition().y)) {
+						return true;
+					}
 				}
 			}
 		}
@@ -146,10 +161,13 @@ public class BoxContainer extends Box {
 			return true;
 		}
 		at.setLocation(x, y);
-		Box box = boxAtPos(at);
-		if (box != null) {
-			if (box.onRelease(x - box.getPosition().x, y - box.getPosition().y)) {
-				return true;
+		Vector<Box> bap = boxesAtPos(at);
+		for (Box box : bap) {
+			if (box != null) {
+				if (box.onRelease(x - box.getPosition().x,
+						y - box.getPosition().y)) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -161,10 +179,14 @@ public class BoxContainer extends Box {
 			return true;
 		}
 		at.setLocation(x, y);
-		Box box = boxAtPos(at);
-		if (box != null) {
-			if (box.onDrag(x - box.getPosition().x, y - box.getPosition().y,newX - box.getPosition().x, newY - box.getPosition().y)) {
-				return true;
+		Vector<Box> bap = boxesAtPos(at);
+		for (Box box : bap) {
+			if (box != null) {
+				if (box.onDrag(x - box.getPosition().x,
+						y - box.getPosition().y, newX - box.getPosition().x,
+						newY - box.getPosition().y)) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -176,10 +198,13 @@ public class BoxContainer extends Box {
 			return true;
 		}
 		at.setLocation(x, y);
-		Box box = boxAtPos(at);
-		if (box != null) {
-			if (box.onZoomOut(x - box.getPosition().x, y - box.getPosition().y)) {
-				return true;
+		Vector<Box> bap = boxesAtPos(at);
+		for (Box box : bap) {
+			if (box != null) {
+				if (box.onZoomOut(x - box.getPosition().x,
+						y - box.getPosition().y)) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -191,11 +216,13 @@ public class BoxContainer extends Box {
 			return true;
 		}
 		at.setLocation(x, y);
-		Box box = boxAtPos(at);
-		if (box != null) {
-			if (box.onTouchCancel(	x - box.getPosition().x,
-									y - box.getPosition().y)) {
-				return true;
+		Vector<Box> bap = boxesAtPos(at);
+		for (Box box : bap) {
+			if (box != null) {
+				if (box.onTouchCancel(x - box.getPosition().x,
+						y - box.getPosition().y)) {
+					return true;
+				}
 			}
 		}
 		return false;

@@ -25,20 +25,39 @@ import com.formatic.boxes.Color;
 import com.formatic.boxes.Point;
 import com.formatic.boxes.gradients.ColorGradient;
 import com.formatic.boxes.gradients.SquareGradient;
+import com.formatic.boxes.widgets.events.ButtonListener;
+import com.formatic.boxes.widgets.events.ColorChooserListener;
+import com.formatic.boxes.widgets.events.DialogListener;
 
-interface PreviewButtonListener {
-	public void valueChanged(int change);
+interface ScrollButtonListener {
+	public void valueChanged(float change);
 }
 
 interface HueSelectorListener {
 	public void valueChanged(float change);
 }
-
-public class ColorChooser extends BoxContainer {
+class NoDragButton extends Button{
+	public NoDragButton(int x, int y, int width, int height, Color normalColor, Color selectedColor){
+		super(x,y,width,height, normalColor, selectedColor);
+	}
+	@Override
+	public boolean onDrag(int x, int y, int newX, int newY) {
+		/*
+		 * Esto solo es para que los botones Aceptar y Cancelar pasen hacia abajo
+		 * el evento de drag
+		 */
+		return false;
+	}
+	
+}
+public class ColorChooser extends BoxContainer implements ButtonListener {
 	int baseWidth, baseHeight;
-	ScrollButton saturationButton, brightnessButton;
+	ScrollButton saturationScroller, brightnessScroller;
+	NoDragButton acceptButton, cancelButton;
 	HueSelector hueSelector;
 	Color selectedColor;
+	ColorChooserListener colorChooserListener;
+
 	public enum Size{
 		MINIMAL, MEDIUM, BIG, FULL
 	}
@@ -51,10 +70,12 @@ public class ColorChooser extends BoxContainer {
 		adjustSizes(size);
 		setSize(baseWidth, baseHeight);
 		selectedColor = new Color(1,0,1,1);
-		saturationButton = new ScrollButton(0, 0, baseWidth, 1, selectedColor,new Color(1,0,0,1),ColorGradient.Target.SATURATION);
-		saturationButton.setNormalColor(selectedColor);
-		brightnessButton = new ScrollButton(0, baseHeight-1, baseWidth, 1, selectedColor,new Color(0,1,0,1),ColorGradient.Target.BRIGHTNESS);
-		brightnessButton.setNormalColor(selectedColor);
+		cancelButton = new NoDragButton(baseWidth-1,0           ,1,1, selectedColor, new Color(1,1,1,1));
+		cancelButton.setButtonListener(this);
+		acceptButton = new NoDragButton(baseWidth-1,baseHeight-1,1,1, selectedColor, new Color(1,1,1,1));
+		acceptButton.setButtonListener(this);
+		saturationScroller = new ScrollButton(0, 0,            baseWidth, 1,new Color(1,1,1,1),new Color(1,1,1,1),ColorGradient.Target.SATURATION);
+		brightnessScroller = new ScrollButton(0, baseHeight-1, baseWidth, 1,new Color(1,1,1,1),new Color(1,1,1,1),ColorGradient.Target.BRIGHTNESS);
 		hueSelector = new HueSelector(0, 1, baseWidth, baseHeight-2, selectedColor.getHue(),
 				selectedColor.getSaturation(), selectedColor.getBrightness());
 		hueSelector.setHueSelectorListener(new HueSelectorListener() {
@@ -63,26 +84,47 @@ public class ColorChooser extends BoxContainer {
 				selectedColor.setHue(change);
 			}
 		});
-		saturationButton.setPreviewButtonListener(new PreviewButtonListener() {
+		saturationScroller.setPreviewButtonListener(new ScrollButtonListener() {
 			@Override
-			public void valueChanged(int change) {
-				selectedColor.setSaturation(selectedColor.getSaturation()
-						+ 0.1f / change);
+			public void valueChanged(float value) {
+//				selectedColor.setSaturation(selectedColor.getSaturation()
+//						+ 0.1f / change);
+				selectedColor.setSaturation(value);
 				hueSelector.setSaturation(selectedColor.getSaturation());
 			}
 		});
-		brightnessButton.setPreviewButtonListener(new PreviewButtonListener() {
+		brightnessScroller.setPreviewButtonListener(new ScrollButtonListener() {
 			@Override
-			public void valueChanged(int change) {
-				selectedColor.setBrightness(selectedColor.getBrightness()
-						+ 0.1f / change);
+			public void valueChanged(float value) {
+//				selectedColor.setBrightness(selectedColor.getBrightness()
+//						+ 0.1f / change);
+				selectedColor.setBrightness(value);
 				hueSelector.setBrightness(selectedColor.getBrightness());
 
 			}
 		});
-		add(saturationButton);
-		add(brightnessButton);
+		add(saturationScroller);
+		add(cancelButton);
 		add(hueSelector);
+		add(brightnessScroller);
+		add(acceptButton);
+	}
+	public Color getSelectedColor() {
+		return selectedColor;
+	}
+
+	public void setColorChooserListener(ColorChooserListener colorChooserListener){
+		this.colorChooserListener=colorChooserListener;
+	}
+	@Override
+	public boolean onClick(Button b) {
+		if(b == acceptButton){
+			if(colorChooserListener != null)colorChooserListener.accepted();
+		}
+		if(b == cancelButton){
+			if(colorChooserListener != null)colorChooserListener.canceled();
+		}
+		return true;
 	}
 	public void adjustSizes(Size size){
 		switch(size){
@@ -104,4 +146,6 @@ public class ColorChooser extends BoxContainer {
 			break;
 		}
 	}
+
+
 }

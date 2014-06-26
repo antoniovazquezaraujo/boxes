@@ -33,6 +33,7 @@ public class HueSelector extends Box  {
 		squareGradient.setColumnOrder(SquareGradient.ColumnOrder.FROM_CENTER);
 		squareGradient.setRowOrder(SquareGradient.RowOrder.FROM_TOP);
 		squareGradient.setStartValue(0.5f);
+		squareGradient.setMinGapDivider((width*height));
 		setColorGradient(squareGradient);
 	}
 

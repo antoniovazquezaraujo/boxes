@@ -51,4 +51,9 @@ public class BoxEventAdapter implements BoxEventListener {
 		return false;
 	}
 
+	@Override
+	public boolean onZoomIn(int x, int y) {
+		return false;
+	}
+
 }

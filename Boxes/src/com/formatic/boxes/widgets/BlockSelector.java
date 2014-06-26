@@ -1,7 +1,7 @@
 package com.formatic.boxes.widgets;
 
 import com.formatic.boxes.widgets.events.BlockSelectorListener;
-import com.formatic.boxes.widgets.events.BoxEventListener;
+import com.formatic.boxes.widgets.events.BoxEventAdapter;
 
 public class BlockSelector extends BoxContainer {
 	BlockSelectorListener blockSelectorListener;
@@ -27,7 +27,7 @@ public class BlockSelector extends BoxContainer {
 		add(switches[5]);
 		selected = 0;
 		allClean = true;
-		setBoxEventListener(new BoxEventListener() {
+		setBoxEventListener(new BoxEventAdapter() {
 			@Override
 			public boolean onZoomOut(int x, int y) {
 				// TODO Auto-generated method stub

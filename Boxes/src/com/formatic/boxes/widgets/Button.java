@@ -50,6 +50,7 @@ public class Button extends Box {
 
 	public void setNormalColor(Color normalColor) {
 		this.normalColor = normalColor;
+		setColor(normalColor);
 	}
 
 	public void setPressedColor(Color pressedColor) {
